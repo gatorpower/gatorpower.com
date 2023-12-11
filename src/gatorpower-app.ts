@@ -115,6 +115,7 @@ export class GatorpowerApp extends LitElement {
       width: 25%; /* Each box takes up 25% of the hero section's width */
       height: 30vh;
       border-radius: 20px;
+      color: #776a59;
       overflow: hidden;
     }
 
