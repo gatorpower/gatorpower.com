@@ -1,3 +1,8 @@
+<p align="center">
+  <img src="https://raw.githubusercontent.com/gatorpower/gatorpower.com/main/assets/gui/victor.jpg" alt="Logo" width="150">
+</p>
+
+
 # Gatorpower.com
 
 Welcome to Gatorpower.com, a dynamic and robust web application utilizing the best of modern web technologies for a seamless user experience.
