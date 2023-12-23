@@ -11,7 +11,7 @@ Welcome to Gatorpower.com, a dynamic and robust web application utilizing the be
 
 ## Description
 
-Gatorpower.com is built with the Lit library for building fast, lightweight web components, and Vaadin Router for client-side routing. It's designed to be modular, performant, and easy to develop with a focus on future web standards.
+Gatorpower.com is a testament to cutting-edge web development, embodying a mission to leverage a full spectrum of modern technologies for an unparalleled user experience. Our platform is engineered as a showcase of expertise in diverse areas, including the reactive paradigms of LitElement, the structured routing of Vaadin Router, and the rigorous application of TypeScript for scalable, maintainable code. By integrating these technologies with a Rollup-based build system, we ensure efficient delivery and performance. Our commitment extends beyond functionality, emphasizing code quality and best practices with thorough linting, formatting, and testing strategies. Gatorpower.com is not just a web application; it's a confluence of innovation, dedication, and a relentless pursuit of excellence in the web development arena.
 
 ## Quickstart
 
@@ -99,6 +99,6 @@ Distributed under the MIT License. See `LICENSE` for more information.
 
 ## Contact
 
-Your Name - [@gatorpowerpt](https://twitter.com/gatorpowerpt)
+Philip Tucker - [@gatorpowerpt](https://twitter.com/gatorpowerpt)
 
-Project Link: [https://github.com/gatorpower/gatorpower.com](https://github.com/gatorpower/gatorpower.com)
+[https://github.com/gatorpower/gatorpower.com](https://github.com/gatorpower/gatorpower.com)
