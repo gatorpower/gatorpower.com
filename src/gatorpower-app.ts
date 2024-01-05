@@ -97,24 +97,24 @@ export class GatorpowerApp extends LitElement {
       background-color: var(--hero-bg-color);
       color: var(--hero-text-color);
       padding: var(--hero-padding);
-      min-height: 60vh; /* At least 60% of the viewport height */
+      max-height: 30vh;
       text-align: center;
       box-shadow: var(--box-shadow);
       display: flex;
       justify-content: space-between; /* Spreads out the child elements */
-      padding-top: 60px; /* Space from the top */
-      padding-left: 30px; /* Space from the left */
-      padding-right: 30px; /* Space from the right */
+      padding-top: 60px;
+      padding-left: 30px;
+      padding-right: 30px;
+      padding-bottom: 32.48%;
     }
 
     .hero .box {
       background-color: var(--hero-bg-color);
       box-sizing: border-box;
       padding: 10px;
-      border: 1px solid #c6a681; /* Gold border */
-      width: 25%; /* Each box takes up 25% of the hero section's width */
-      height: 30vh;
-      border-radius: 20px;
+      border: 1px solid #c6a681;
+      width: 30%;
+      border-radius: 10px;
       color: #776a59;
       overflow: hidden;
     }
@@ -197,10 +197,31 @@ export class GatorpowerApp extends LitElement {
 
     @media (max-width: 768px) {
       section.hero {
-        padding: 50px 20px;
+        display: block; /* Resets */
+        justify-content: flex-start; /* Resets */
+        max-height: none;
+        text-align: justify;
+        padding-bottom: 60%;
       }
       main.main-body {
         padding: 25px;
+      }
+      .svg-corner {
+        display: none;
+      }
+      .svg-background .portrait {
+        width: 15%;
+        padding-top: 20%;
+        border: 2px solid #4c4f51;
+      }
+      .portrait .name {
+        display: none;
+      }
+      .hero .box {
+        background: none;
+        width: 100%;
+        border: none;
+        padding: 0;
       }
     }
   `;
