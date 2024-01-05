@@ -52,7 +52,7 @@ export class GatorpowerApp extends LitElement {
       content: '';
       display: block;
       position: absolute;
-      bottom: calc(-1 * var(--wave-height));
+      bottom: calc(-1 * var(--wave-height) + 5px);
       left: 0;
       width: 100%;
       height: var(--wave-height);
@@ -69,14 +69,14 @@ export class GatorpowerApp extends LitElement {
     }
 
     header .svg-left {
-      left: 0px;
+      left: -5px;
       background-image: url('./assets/gui/header-border-fl.svg');
       background-position: top left;
       background-repeat: no-repeat;
     }
 
     header .svg-right {
-      right: 0px;
+      right: -5px;
       background-image: url('./assets/gui/header-border-fl.svg');
       background-position: top left;
       background-repeat: no-repeat;
@@ -129,7 +129,7 @@ export class GatorpowerApp extends LitElement {
 
     .svg-background {
       position: absolute;
-      top: calc(-1 * var(--wave-height) * 2);
+      top: calc(-1 * (var(--wave-height) * 2) + 5px);
       left: 0;
       height: calc(var(--wave-height) * 2);
       width: 100%;
@@ -144,7 +144,7 @@ export class GatorpowerApp extends LitElement {
     }
 
     .svg-background .svg-left {
-      left: 0;
+      left: -5px;
       background-image: url('./assets/gui/flourish_trim.svg'),
         url('./assets/gui/flourish_trim-bg.svg');
       background-position: left bottom;
@@ -153,7 +153,7 @@ export class GatorpowerApp extends LitElement {
     }
 
     .svg-background .svg-right {
-      right: 0;
+      right: -5px;
       background-image: url('./assets/gui/flourish_trim.svg'),
         url('./assets/gui/flourish_trim-bg.svg');
       background-position: left bottom;
