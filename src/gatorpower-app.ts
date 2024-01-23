@@ -61,6 +61,18 @@ export class GatorpowerApp extends LitElement {
       background-repeat: no-repeat;
     }
 
+    header > h1 {
+      background-image: url('./assets/gui/main-logo.svg');
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center center;
+      height: calc(100% - 10px);
+      width: 40%;
+      min-width: 300px;
+      padding-top: 5px;
+      font-size: 0;
+    }
+
     .svg-corner {
       position: absolute;
       bottom: calc(-1 * (var(--wave-height) / 2));
@@ -82,11 +94,6 @@ export class GatorpowerApp extends LitElement {
       background-repeat: no-repeat;
       transform: scale(-1, 1);
       transform-origin: center;
-    }
-
-    header h1 {
-      color: #bdb7ae;
-      font-size: 30px;
     }
 
     section.hero {
@@ -191,6 +198,15 @@ export class GatorpowerApp extends LitElement {
       font-weight: bold;
     }
 
+    .hidden {
+      position: absolute !important;
+      left: -10000px !important;
+      top: auto !important;
+      width: 1px !important;
+      height: 1px !important;
+      overflow: hidden !important;
+    }
+
     /* 
       const logo = new URL('../../assets/open-wc-logo.svg', import.meta.url).href;    
     */
@@ -229,7 +245,7 @@ export class GatorpowerApp extends LitElement {
   render() {
     return html`
       <header>
-        <h1>Gatorpower</h1>
+        <h1><span class="hidden">Gatorpower</span></h1>
         <div class="svg-corner svg-left"><!-- SVG Left --></div>
         <div class="svg-corner svg-right"><!-- SVG Right --></div>
       </header>
