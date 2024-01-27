@@ -170,32 +170,52 @@ export class GatorpowerApp extends LitElement {
     }
 
     .svg-background .portrait {
+      background: linear-gradient(
+        180deg,
+        #5b5c60 0%,
+        #5b5c60 2.5%,
+        #49494b 10%,
+        #626264 16.8%,
+        #a2a2a4 24%,
+        #a5a5a5 41.5%,
+        #a1a1a1 43.5%,
+        #8e8e8e 45.5%,
+        #575757 51.5%,
+        #1b1b1b 58%,
+        #505153 63.5%,
+        #4c4c4e 70%,
+        #afb0b4 76.5%,
+        #797a7c 87%,
+        #797a7c 100%
+      );
+      text-align: center;
+      width: calc(10% + 16px); /* Add the border width to the original width */
+      padding-top: calc(
+        15% + 16px
+      ); /* Add the border width to the original height for aspect ratio */
+      border-radius: 50%;
+      border: 1px solid #656565;
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%) translateY(-50%);
+      z-index: 10;
+    }
+
+    .svg-background .portrait::before {
+      content: '';
+      position: absolute;
+      top: 8px; /* Half of the added width to adjust for the border */
+      left: 8px; /* Half of the added width to adjust for the border */
+      width: calc(100% - 16px); /* Subtract the border width */
+      height: calc(100% - 16px); /* Subtract the border width */
+      border-radius: 50%;
+      z-index: -1;
+      box-sizing: border-box;
       background-image: url('./assets/gui/victor.jpg');
       background-color: black;
       background-size: cover;
       background-position: center;
-      text-align: center;
-      width: 10%; /* Width relative to the container */
-      height: 0;
-      padding-top: 15%; /* Height based on the aspect ratio */
-      border-radius: 50%; /* Make it oval/circle */
-      position: absolute;
-      top: 100%; /* Align the top edge with the bottom of the parent */
-      left: 50%; /* Center horizontally */
-      transform: translateX(-50%) translateY(-50%); /* Adjust horizontally and vertically */
-      border: 8px solid #4c4f51;
-      z-index: 10;
-    }
-
-    .portrait .name {
-      position: absolute;
-      bottom: 10%; /* 1/4th from the bottom */
-      transform: translateX(
-        -50%
-      ); /* Adjust horizontally for perfect centering */
-      white-space: nowrap;
-      color: var(--hero-bg-color);
-      font-weight: bold;
     }
 
     .hidden {
@@ -226,12 +246,14 @@ export class GatorpowerApp extends LitElement {
         display: none;
       }
       .svg-background .portrait {
-        width: 15%;
-        padding-top: 20%;
-        border: 2px solid #4c4f51;
+        width: calc(15% + 8px);
+        padding-top: calc(20% + 8px);
       }
-      .portrait .name {
-        display: none;
+      .svg-background .portrait::before {
+        top: 4px; /* Half of the added width to adjust for the border */
+        left: 4px; /* Half of the added width to adjust for the border */
+        width: calc(100% - 8px); /* Subtract the border width */
+        height: calc(100% - 8px); /* Subtract the border width */
       }
       .hero .box {
         background: none;
@@ -332,9 +354,7 @@ export class GatorpowerApp extends LitElement {
       <main class="main-body">
         <div class="svg-background">
           <div class="svg-left"><!-- SVG Back --></div>
-          <div class="portrait">
-            <span class="name">Victor E. Gator</span>
-          </div>
+          <div class="portrait"></div>
           <div class="svg-right"><!-- SVG Front --></div>
         </div>
         <h1>Main Body Content</h1>
