@@ -97,7 +97,7 @@ export class GatorpowerApp extends LitElement {
     }
 
     section.hero {
-      background-image: url('./assets/gui/train.jpg');
+      background-image: url('./assets/gui/train.png');
       background-position: bottom center;
       background-repeat: no-repeat;
       background-size: contain;
@@ -233,21 +233,26 @@ export class GatorpowerApp extends LitElement {
 
     @media (max-width: 768px) {
       section.hero {
+        background-position: center calc(100% - 45px);
         display: block; /* Resets */
         justify-content: flex-start; /* Resets */
         max-height: none;
         text-align: justify;
         padding-bottom: 60%;
+        padding-left: 5px;
+        padding-right: 5px;
       }
       main.main-body {
-        padding: 25px;
+        padding-top: 20%;
+        padding-left: 5px;
+        padding-right: 5px;
       }
       .svg-corner {
         display: none;
       }
       .svg-background .portrait {
-        width: calc(15% + 8px);
-        padding-top: calc(20% + 8px);
+        width: calc(30% + 8px);
+        padding-top: calc(40% + 8px);
       }
       .svg-background .portrait::before {
         top: 4px; /* Half of the added width to adjust for the border */
