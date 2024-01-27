@@ -25,12 +25,12 @@
     </linearGradient>
     <linearGradient id="g-stroke" x1="0%" y1="0%" x2="0%" y2="100%">
       <stop offset="0%" stop-color="#afafb1" />
-      <stop offset="100%" stop-color="#6b6b6b" />
+      <stop offset="100%" stop-color="#919192" />
     </linearGradient>
     <filter id="dropshadow" x="-40%" y="-40%" width="180%" height="180%">
       <feOffset result="offOut" in="SourceGraphic" dx="10" dy="10" />
       <feColorMatrix result="matrixOut" in="offOut" type="matrix"
-        values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.4 0" />
+        values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.7 0" />
       <feGaussianBlur result="blurOut" in="matrixOut" stdDeviation="10" />
       <feBlend in="SourceGraphic" in2="blurOut" mode="normal" />
     </filter>
