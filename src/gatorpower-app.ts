@@ -233,19 +233,19 @@ export class GatorpowerApp extends LitElement {
 
     @media (max-width: 768px) {
       section.hero {
-        background-position: center calc(100% - 45px);
+        background-image: none;
         display: block; /* Resets */
         justify-content: flex-start; /* Resets */
         max-height: none;
         text-align: justify;
-        padding-bottom: 60%;
-        padding-left: 5px;
-        padding-right: 5px;
+        padding-bottom: 20%;
+        padding-left: 8px;
+        padding-right: 8px;
       }
       main.main-body {
         padding-top: 20%;
-        padding-left: 5px;
-        padding-right: 5px;
+        padding-left: 8px;
+        padding-right: 8px;
       }
       .svg-corner {
         display: none;
