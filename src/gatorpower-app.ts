@@ -11,8 +11,8 @@ export class GatorpowerApp extends LitElement {
       --hero-bg-color: #e5d9be;
       --main-body-bg-color: linear-gradient(to bottom, #333436, #24262b);
       --header-padding: 0px;
-      --hero-padding: 100px 50px;
-      --main-body-padding: 50px;
+      --hero-padding: 100px 20px;
+      --main-body-padding: 20px;
       --header-text-color: white;
       --hero-text-color: black;
       --main-text-color: black;
@@ -40,12 +40,12 @@ export class GatorpowerApp extends LitElement {
       padding: var(--header-padding);
       box-sizing: border-box;
       height: 70px;
-      text-align: center;
       color: var(--header-text-color);
       position: relative;
       display: flex;
       align-items: center;
-      justify-content: center;
+      justify-content: space-between;
+      /* overflow-x: hidden;  */
     }
 
     header::after {
@@ -73,7 +73,7 @@ export class GatorpowerApp extends LitElement {
       font-size: 0;
     }
 
-    .svg-corner {
+    header .svg-corner {
       position: absolute;
       bottom: calc(-1 * (var(--wave-height) / 2));
       height: calc(var(--wave-height) / 2);
@@ -81,14 +81,14 @@ export class GatorpowerApp extends LitElement {
     }
 
     header .svg-left {
-      left: -5px;
+      left: 0px;
       background-image: url('./assets/gui/header-border-fl.svg');
       background-position: top left;
       background-repeat: no-repeat;
     }
 
     header .svg-right {
-      right: -5px;
+      right: 0px;
       background-image: url('./assets/gui/header-border-fl.svg');
       background-position: top left;
       background-repeat: no-repeat;
@@ -115,15 +115,41 @@ export class GatorpowerApp extends LitElement {
       padding-bottom: 32.48%;
     }
 
-    .hero .box {
+    .hero .box-wrapper {
+      position: relative;
       background-color: var(--hero-bg-color);
       box-sizing: border-box;
       padding: 10px;
       border: 1px solid #c6a681;
       width: 30%;
       border-radius: 10px;
+    }
+
+    .hero .box-wrapper::before {
+      content: '';
+      background-image: url('./assets/gui/flourish-box.svg');
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center center;
+      position: absolute;
+      top: -10px;
+      left: 30%; /* Adjust for the starting point */
+      right: 30%; /* Adjust for the ending point */
+      height: 15px;
+      background-color: var(--hero-bg-color);
+    }
+
+    .hero .box {
       color: #776a59;
       overflow: hidden;
+      width: 100%;
+      height: 100%;
+      box-sizing: border-box;
+    }
+
+    .hero .box p:first-child {
+      padding-top: 0;
+      margin-top: 0;
     }
 
     main.main-body {
@@ -151,19 +177,19 @@ export class GatorpowerApp extends LitElement {
     }
 
     .svg-background .svg-left {
-      left: -5px;
+      left: 0px;
       background-image: url('./assets/gui/flourish_trim.svg'),
         url('./assets/gui/flourish_trim-bg.svg');
-      background-position: left bottom;
+      background-position: -5px bottom;
       background-size: 100%;
       background-repeat: no-repeat;
     }
 
     .svg-background .svg-right {
-      right: -5px;
+      right: 0px;
       background-image: url('./assets/gui/flourish_trim.svg'),
         url('./assets/gui/flourish_trim-bg.svg');
-      background-position: left bottom;
+      background-position: -5px bottom;
       background-size: 100%;
       background-repeat: no-repeat;
       transform: scaleX(-1);
@@ -191,7 +217,7 @@ export class GatorpowerApp extends LitElement {
       text-align: center;
       width: calc(10% + 16px); /* Add the border width to the original width */
       padding-top: calc(
-        15% + 16px
+        15% + 8px
       ); /* Add the border width to the original height for aspect ratio */
       border-radius: 50%;
       border: 1px solid #656565;
@@ -205,10 +231,10 @@ export class GatorpowerApp extends LitElement {
     .svg-background .portrait::before {
       content: '';
       position: absolute;
-      top: 8px; /* Half of the added width to adjust for the border */
-      left: 8px; /* Half of the added width to adjust for the border */
-      width: calc(100% - 16px); /* Subtract the border width */
-      height: calc(100% - 16px); /* Subtract the border width */
+      top: 4px; /* Half of the added width to adjust for the border */
+      left: 4px; /* Half of the added width to adjust for the border */
+      width: calc(100% - 8px); /* Subtract the border width */
+      height: calc(100% - 8px); /* Subtract the border width */
       border-radius: 50%;
       z-index: -1;
       box-sizing: border-box;
@@ -260,11 +286,18 @@ export class GatorpowerApp extends LitElement {
         width: calc(100% - 8px); /* Subtract the border width */
         height: calc(100% - 8px); /* Subtract the border width */
       }
-      .hero .box {
+      .hero .box-wrapper {
         background: none;
         width: 100%;
         border: none;
         padding: 0;
+      }
+      .hero .box {
+        width: auto;
+        height: auto;
+      }
+      .hero .box-wrapper::before {
+        content: none; /* Removes the pseudo-element */
       }
     }
   `;
@@ -272,96 +305,113 @@ export class GatorpowerApp extends LitElement {
   render() {
     return html`
       <header>
+        <div class="left-elements">Left</div>
         <h1><span class="hidden">Gatorpower</span></h1>
-        <div class="svg-corner svg-left"><!-- SVG Left --></div>
-        <div class="svg-corner svg-right"><!-- SVG Right --></div>
+        <div class="right-elements">Right</div>
+        <!-- HAS CSS ISSUES START -->
+        <div class="svg-corner svg-left"></div>
+        <div class="svg-corner svg-right"></div>
+        <!-- HAS CSS ISSUES END -->
       </header>
 
       <section class="hero">
-        <div class="box">
-          <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua. A
-            condimentum vitae sapien pellentesque habitant morbi tristique
-            senectus. Sit amet tellus cras adipiscing enim eu turpis. Mus mauris
-            vitae ultricies leo integer malesuada. Aenean euismod elementum nisi
-            quis. Elit eget gravida cum sociis natoque penatibus et. Ullamcorper
-            malesuada proin libero nunc consequat interdum varius sit. Ornare
-            arcu dui vivamus arcu. In nisl nisi scelerisque eu ultrices. At
-            volutpat diam ut venenatis tellus in. Aliquam purus sit amet luctus
-            venenatis lectus magna. Accumsan in nisl nisi scelerisque eu
-            ultrices vitae auctor. Fusce ut placerat orci nulla pellentesque
-            dignissim enim sit. Lorem ipsum dolor sit amet, consectetur
-            adipiscing elit, sed do eiusmod tempor incididunt ut labore et
-            dolore magna aliqua. A condimentum vitae sapien pellentesque
-            habitant morbi tristique senectus. Sit amet tellus cras adipiscing
-            enim eu turpis. Mus mauris vitae ultricies leo integer malesuada.
-            Aenean euismod elementum nisi quis. Elit eget gravida cum sociis
-            natoque penatibus et. Ullamcorper malesuada proin libero nunc
-            consequat interdum varius sit. Ornare arcu dui vivamus arcu. In nisl
-            nisi scelerisque eu ultrices. At volutpat diam ut venenatis tellus
-            in. Aliquam purus sit amet luctus venenatis lectus magna. Accumsan
-            in nisl nisi scelerisque eu ultrices vitae auctor. Fusce ut placerat
-            orci nulla pellentesque dignissim enim sit. Lorem ipsum dolor sit
-            amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
-            ut labore et dolore magna aliqua. A condimentum vitae sapien
-            pellentesque habitant morbi tristique senectus. Sit amet tellus cras
-            adipiscing enim eu turpis. Mus mauris vitae ultricies leo integer
-            malesuada. Aenean euismod elementum nisi quis. Elit eget gravida cum
-            sociis natoque penatibus et. Ullamcorper malesuada proin libero nunc
-            consequat interdum varius sit. Ornare arcu dui vivamus arcu. In nisl
-            nisi scelerisque eu ultrices. At volutpat diam ut venenatis tellus
-            in. Aliquam purus sit amet luctus venenatis lectus magna. Accumsan
-            in nisl nisi scelerisque eu ultrices vitae auctor. Fusce ut placerat
-            orci nulla pellentesque dignissim enim sit.
-          </p>
+        <div class="box-wrapper">
+          <div class="box">
+            <p>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+              eiusmod tempor incididunt ut labore et dolore magna aliqua. A
+              condimentum vitae sapien pellentesque habitant morbi tristique
+              senectus. Sit amet tellus cras adipiscing enim eu turpis. Mus
+              mauris vitae ultricies leo integer malesuada. Aenean euismod
+              elementum nisi quis. Elit eget gravida cum sociis natoque
+              penatibus et. Ullamcorper malesuada proin libero nunc consequat
+              interdum varius sit. Ornare arcu dui vivamus arcu. In nisl nisi
+              scelerisque eu ultrices. At volutpat diam ut venenatis tellus in.
+              Aliquam purus sit amet luctus venenatis lectus magna. Accumsan in
+              nisl nisi scelerisque eu ultrices vitae auctor. Fusce ut placerat
+              orci nulla pellentesque dignissim enim sit. Lorem ipsum dolor sit
+              amet, consectetur adipiscing elit, sed do eiusmod tempor
+              incididunt ut labore et dolore magna aliqua. A condimentum vitae
+              sapien pellentesque habitant morbi tristique senectus. Sit amet
+              tellus cras adipiscing enim eu turpis. Mus mauris vitae ultricies
+              leo integer malesuada. Aenean euismod elementum nisi quis. Elit
+              eget gravida cum sociis natoque penatibus et. Ullamcorper
+              malesuada proin libero nunc consequat interdum varius sit. Ornare
+              arcu dui vivamus arcu. In nisl nisi scelerisque eu ultrices. At
+              volutpat diam ut venenatis tellus in. Aliquam purus sit amet
+              luctus venenatis lectus magna. Accumsan in nisl nisi scelerisque
+              eu ultrices vitae auctor. Fusce ut placerat orci nulla
+              pellentesque dignissim enim sit. Lorem ipsum dolor sit amet,
+              consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+              labore et dolore magna aliqua. A condimentum vitae sapien
+              pellentesque habitant morbi tristique senectus. Sit amet tellus
+              cras adipiscing enim eu turpis. Mus mauris vitae ultricies leo
+              integer malesuada. Aenean euismod elementum nisi quis. Elit eget
+              gravida cum sociis natoque penatibus et. Ullamcorper malesuada
+              proin libero nunc consequat interdum varius sit. Ornare arcu dui
+              vivamus arcu. In nisl nisi scelerisque eu ultrices. At volutpat
+              diam ut venenatis tellus in. Aliquam purus sit amet luctus
+              venenatis lectus magna. Accumsan in nisl nisi scelerisque eu
+              ultrices vitae auctor. Fusce ut placerat orci nulla pellentesque
+              dignissim enim sit.
+            </p>
+          </div>
         </div>
-        <div class="box">
-          <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua. A
-            condimentum vitae sapien pellentesque habitant morbi tristique
-            senectus. Sit amet tellus cras adipiscing enim eu turpis. Mus mauris
-            vitae ultricies leo integer malesuada. Aenean euismod elementum nisi
-            quis. Elit eget gravida cum sociis natoque penatibus et. Ullamcorper
-            malesuada proin libero nunc consequat interdum varius sit. Ornare
-            arcu dui vivamus arcu. In nisl nisi scelerisque eu ultrices. At
-            volutpat diam ut venenatis tellus in. Aliquam purus sit amet luctus
-            venenatis lectus magna. Accumsan in nisl nisi scelerisque eu
-            ultrices vitae auctor. Fusce ut placerat orci nulla pellentesque
-            dignissim enim sit. Lorem ipsum dolor sit amet, consectetur
-            adipiscing elit, sed do eiusmod tempor incididunt ut labore et
-            dolore magna aliqua. A condimentum vitae sapien pellentesque
-            habitant morbi tristique senectus. Sit amet tellus cras adipiscing
-            enim eu turpis. Mus mauris vitae ultricies leo integer malesuada.
-            Aenean euismod elementum nisi quis. Elit eget gravida cum sociis
-            natoque penatibus et. Ullamcorper malesuada proin libero nunc
-            consequat interdum varius sit. Ornare arcu dui vivamus arcu. In nisl
-            nisi scelerisque eu ultrices. At volutpat diam ut venenatis tellus
-            in. Aliquam purus sit amet luctus venenatis lectus magna. Accumsan
-            in nisl nisi scelerisque eu ultrices vitae auctor. Fusce ut placerat
-            orci nulla pellentesque dignissim enim sit. Lorem ipsum dolor sit
-            amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
-            ut labore et dolore magna aliqua. A condimentum vitae sapien
-            pellentesque habitant morbi tristique senectus. Sit amet tellus cras
-            adipiscing enim eu turpis. Mus mauris vitae ultricies leo integer
-            malesuada. Aenean euismod elementum nisi quis. Elit eget gravida cum
-            sociis natoque penatibus et. Ullamcorper malesuada proin libero nunc
-            consequat interdum varius sit. Ornare arcu dui vivamus arcu. In nisl
-            nisi scelerisque eu ultrices. At volutpat diam ut venenatis tellus
-            in. Aliquam purus sit amet luctus venenatis lectus magna. Accumsan
-            in nisl nisi scelerisque eu ultrices vitae auctor. Fusce ut placerat
-            orci nulla pellentesque dignissim enim sit.
-          </p>
+        <div class="box-wrapper">
+          <div class="box">
+            <p>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+              eiusmod tempor incididunt ut labore et dolore magna aliqua. A
+              condimentum vitae sapien pellentesque habitant morbi tristique
+              senectus. Sit amet tellus cras adipiscing enim eu turpis. Mus
+              mauris vitae ultricies leo integer malesuada. Aenean euismod
+              elementum nisi quis. Elit eget gravida cum sociis natoque
+              penatibus et. Ullamcorper malesuada proin libero nunc consequat
+              interdum varius sit. Ornare arcu dui vivamus arcu. In nisl nisi
+              scelerisque eu ultrices. At volutpat diam ut venenatis tellus in.
+              Aliquam purus sit amet luctus venenatis lectus magna. Accumsan in
+              nisl nisi scelerisque eu ultrices vitae auctor. Fusce ut placerat
+              orci nulla pellentesque dignissim enim sit. Lorem ipsum dolor sit
+              amet, consectetur adipiscing elit, sed do eiusmod tempor
+              incididunt ut labore et dolore magna aliqua. A condimentum vitae
+              sapien pellentesque habitant morbi tristique senectus. Sit amet
+              tellus cras adipiscing enim eu turpis. Mus mauris vitae ultricies
+              leo integer malesuada. Aenean euismod elementum nisi quis. Elit
+              eget gravida cum sociis natoque penatibus et. Ullamcorper
+              malesuada proin libero nunc consequat interdum varius sit. Ornare
+              arcu dui vivamus arcu. In nisl nisi scelerisque eu ultrices. At
+              volutpat diam ut venenatis tellus in. Aliquam purus sit amet
+              luctus venenatis lectus magna. Accumsan in nisl nisi scelerisque
+              eu ultrices vitae auctor. Fusce ut placerat orci nulla
+              pellentesque dignissim enim sit. Lorem ipsum dolor sit amet,
+              consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+              labore et dolore magna aliqua. A condimentum vitae sapien
+              pellentesque habitant morbi tristique senectus. Sit amet tellus
+              cras adipiscing enim eu turpis. Mus mauris vitae ultricies leo
+              integer malesuada. Aenean euismod elementum nisi quis. Elit eget
+              gravida cum sociis natoque penatibus et. Ullamcorper malesuada
+              proin libero nunc consequat interdum varius sit. Ornare arcu dui
+              vivamus arcu. In nisl nisi scelerisque eu ultrices. At volutpat
+              diam ut venenatis tellus in. Aliquam purus sit amet luctus
+              venenatis lectus magna. Accumsan in nisl nisi scelerisque eu
+              ultrices vitae auctor. Fusce ut placerat orci nulla pellentesque
+              dignissim enim sit.
+            </p>
+          </div>
         </div>
       </section>
 
       <main class="main-body">
         <div class="svg-background">
-          <div class="svg-left"><!-- SVG Back --></div>
+          <!-- HAS CSS ISSUES START -->
+          <div class="svg-left"></div>
+          <!-- HAS CSS ISSUES END -->
           <div class="portrait"></div>
-          <div class="svg-right"><!-- SVG Front --></div>
+          <!-- HAS CSS ISSUES START -->
+          <div class="svg-right"></div>
+          <!-- HAS CSS ISSUES END -->
         </div>
+
         <h1>Main Body Content</h1>
         <p>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
