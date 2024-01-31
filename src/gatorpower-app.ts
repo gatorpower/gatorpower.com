@@ -94,6 +94,7 @@ export class GatorpowerApp extends LitElement {
       outline-color: transparent;
       border-color: transparent;
       outline: 0;
+      margin-left: 5px;
     }
 
     header .right-elements a:hover,
@@ -153,11 +154,23 @@ export class GatorpowerApp extends LitElement {
       padding-bottom: 30%;
     }
 
+    section.hero h2 {
+      color: rgb(98, 72, 50);
+      text-align: left;
+      margin: 0;
+      padding: 0;
+      font-size: 1em;
+    }
+
+    section.hero p {
+      margin: 8px 0px;
+    }
+
     .hero .box-wrapper {
       position: relative;
       background-color: var(--hero-bg-color);
       box-sizing: border-box;
-      padding: 10px 30px;
+      padding: 15px 30px;
       border: 1px solid #c6a681;
       width: 30%;
       border-radius: 10px;
@@ -379,85 +392,49 @@ export class GatorpowerApp extends LitElement {
       <section class="hero">
         <div class="box-wrapper">
           <div class="box">
+            <h2>Innovative Web Solutions</h2>
             <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua. A
-              condimentum vitae sapien pellentesque habitant morbi tristique
-              senectus. Sit amet tellus cras adipiscing enim eu turpis. Mus
-              mauris vitae ultricies leo integer malesuada. Aenean euismod
-              elementum nisi quis. Elit eget gravida cum sociis natoque
-              penatibus et. Ullamcorper malesuada proin libero nunc consequat
-              interdum varius sit. Ornare arcu dui vivamus arcu. In nisl nisi
-              scelerisque eu ultrices. At volutpat diam ut venenatis tellus in.
-              Aliquam purus sit amet luctus venenatis lectus magna. Accumsan in
-              nisl nisi scelerisque eu ultrices vitae auctor. Fusce ut placerat
-              orci nulla pellentesque dignissim enim sit. Lorem ipsum dolor sit
-              amet, consectetur adipiscing elit, sed do eiusmod tempor
-              incididunt ut labore et dolore magna aliqua. A condimentum vitae
-              sapien pellentesque habitant morbi tristique senectus. Sit amet
-              tellus cras adipiscing enim eu turpis. Mus mauris vitae ultricies
-              leo integer malesuada. Aenean euismod elementum nisi quis. Elit
-              eget gravida cum sociis natoque penatibus et. Ullamcorper
-              malesuada proin libero nunc consequat interdum varius sit. Ornare
-              arcu dui vivamus arcu. In nisl nisi scelerisque eu ultrices. At
-              volutpat diam ut venenatis tellus in. Aliquam purus sit amet
-              luctus venenatis lectus magna. Accumsan in nisl nisi scelerisque
-              eu ultrices vitae auctor. Fusce ut placerat orci nulla
-              pellentesque dignissim enim sit. Lorem ipsum dolor sit amet,
-              consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-              labore et dolore magna aliqua. A condimentum vitae sapien
-              pellentesque habitant morbi tristique senectus. Sit amet tellus
-              cras adipiscing enim eu turpis. Mus mauris vitae ultricies leo
-              integer malesuada. Aenean euismod elementum nisi quis. Elit eget
-              gravida cum sociis natoque penatibus et. Ullamcorper malesuada
-              proin libero nunc consequat interdum varius sit. Ornare arcu dui
-              vivamus arcu. In nisl nisi scelerisque eu ultrices. At volutpat
-              diam ut venenatis tellus in. Aliquam purus sit amet luctus
-              venenatis lectus magna. Accumsan in nisl nisi scelerisque eu
-              ultrices vitae auctor. Fusce ut placerat orci nulla pellentesque
-              dignissim enim sit.
+              We specialize in developing state-of-the-art web applications that
+              combine functionality with aesthetic appeal. Our team’s expertise
+              spans a range of technologies including <strong>React</strong>,
+              <strong>Vue</strong>, <strong>Angular</strong>,
+              <strong>.NET</strong>, and <strong>Node JS</strong>, enabling us
+              to create responsive and engaging web experiences.
+            </p>
+            <h2>Comprehensive Backend Development</h2>
+            <p>
+              Our backend development combines versatility and robustness. We
+              skillfully use <strong>PHP</strong>, <strong>Java</strong>, and
+              <strong>C#</strong>, integrating advanced <strong>SQL</strong> and
+              <strong>NoSQL</strong> database technologies for efficient data
+              management. Our API development expertise ensures secure, scalable
+              solutions, essential for high-performance web applications.
             </p>
           </div>
         </div>
         <div class="box-wrapper">
           <div class="box">
+            <h2>Cloud Services and DevOps</h2>
             <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua. A
-              condimentum vitae sapien pellentesque habitant morbi tristique
-              senectus. Sit amet tellus cras adipiscing enim eu turpis. Mus
-              mauris vitae ultricies leo integer malesuada. Aenean euismod
-              elementum nisi quis. Elit eget gravida cum sociis natoque
-              penatibus et. Ullamcorper malesuada proin libero nunc consequat
-              interdum varius sit. Ornare arcu dui vivamus arcu. In nisl nisi
-              scelerisque eu ultrices. At volutpat diam ut venenatis tellus in.
-              Aliquam purus sit amet luctus venenatis lectus magna. Accumsan in
-              nisl nisi scelerisque eu ultrices vitae auctor. Fusce ut placerat
-              orci nulla pellentesque dignissim enim sit. Lorem ipsum dolor sit
-              amet, consectetur adipiscing elit, sed do eiusmod tempor
-              incididunt ut labore et dolore magna aliqua. A condimentum vitae
-              sapien pellentesque habitant morbi tristique senectus. Sit amet
-              tellus cras adipiscing enim eu turpis. Mus mauris vitae ultricies
-              leo integer malesuada. Aenean euismod elementum nisi quis. Elit
-              eget gravida cum sociis natoque penatibus et. Ullamcorper
-              malesuada proin libero nunc consequat interdum varius sit. Ornare
-              arcu dui vivamus arcu. In nisl nisi scelerisque eu ultrices. At
-              volutpat diam ut venenatis tellus in. Aliquam purus sit amet
-              luctus venenatis lectus magna. Accumsan in nisl nisi scelerisque
-              eu ultrices vitae auctor. Fusce ut placerat orci nulla
-              pellentesque dignissim enim sit. Lorem ipsum dolor sit amet,
-              consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-              labore et dolore magna aliqua. A condimentum vitae sapien
-              pellentesque habitant morbi tristique senectus. Sit amet tellus
-              cras adipiscing enim eu turpis. Mus mauris vitae ultricies leo
-              integer malesuada. Aenean euismod elementum nisi quis. Elit eget
-              gravida cum sociis natoque penatibus et. Ullamcorper malesuada
-              proin libero nunc consequat interdum varius sit. Ornare arcu dui
-              vivamus arcu. In nisl nisi scelerisque eu ultrices. At volutpat
-              diam ut venenatis tellus in. Aliquam purus sit amet luctus
-              venenatis lectus magna. Accumsan in nisl nisi scelerisque eu
-              ultrices vitae auctor. Fusce ut placerat orci nulla pellentesque
-              dignissim enim sit.
+              Embracing cloud technologies, we deliver scalable and flexible
+              solutions using <strong>AWS</strong>, <strong>Azure</strong>,
+              <strong>GitHub</strong>, and <strong>Docker</strong>. Our approach
+              ensures robust cloud infrastructure coupled with efficient version
+              control and collaborative workflows, essential for modern web
+              development. Our DevOps practices ensure seamless deployment and
+              management of applications, enhancing performance and reliability.
+            </p>
+            <h2>Responsive Design and User Experience</h2>
+            <p>
+              In our approach to design and user experience, we prioritize
+              inclusivity and adherence to the highest standards. Our work
+              complies with Section 508, ensuring accessibility for all users,
+              and we strictly follow <strong>HTML5</strong> standards to
+              guarantee that our websites are not only visually appealing but
+              also functionally robust and universally accessible. This
+              commitment to best practices in design and development is
+              fundamental in delivering a seamless, engaging user experience
+              across all devices.
             </p>
           </div>
         </div>
