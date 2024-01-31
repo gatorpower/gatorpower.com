@@ -69,8 +69,40 @@ export class GatorpowerApp extends LitElement {
       height: calc(100% - 10px);
       width: 40%;
       min-width: 300px;
+      min-height: 65px;
       padding-top: 5px;
       font-size: 0;
+    }
+
+    header .left-elements,
+    header .right-elements {
+      margin: 0px 15px;
+    }
+
+    .github {
+      background-image: url('./assets/gui/github.svg');
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center center;
+      display: inline-block;
+      height: 50px;
+      width: 50px;
+      outline-color: transparent;
+      border-color: transparent;
+      outline: 0;
+    }
+
+    .linkedin {
+      background-image: url('./assets/gui/linkedin.svg');
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center center;
+      display: inline-block;
+      height: 50px;
+      width: 50px;
+      outline-color: transparent;
+      border-color: transparent;
+      outline: 0;
     }
 
     header .svg-corner {
@@ -98,28 +130,28 @@ export class GatorpowerApp extends LitElement {
 
     section.hero {
       background-image: url('./assets/gui/train.png');
-      background-position: bottom center;
+      background-position: bottom -50px center;
       background-repeat: no-repeat;
       background-size: contain;
       background-color: var(--hero-bg-color);
       color: var(--hero-text-color);
       padding: var(--hero-padding);
-      max-height: 30vh;
-      text-align: center;
+      max-height: 40vh;
+      text-align: justify;
       box-shadow: var(--box-shadow);
       display: flex;
       justify-content: space-between; /* Spreads out the child elements */
       padding-top: 60px;
       padding-left: 30px;
       padding-right: 30px;
-      padding-bottom: 32.48%;
+      padding-bottom: 30%;
     }
 
     .hero .box-wrapper {
       position: relative;
       background-color: var(--hero-bg-color);
       box-sizing: border-box;
-      padding: 10px;
+      padding: 10px 30px;
       border: 1px solid #c6a681;
       width: 30%;
       border-radius: 10px;
@@ -258,12 +290,23 @@ export class GatorpowerApp extends LitElement {
     */
 
     @media (max-width: 768px) {
+      header {
+        flex-direction: column;
+        height: auto;
+      }
+
+      header h1 {
+        order: -1; /* This ensures h1 is always first */
+      }
+      header .left-elements,
+      header .right-elements {
+        margin: 10px;
+      }
       section.hero {
         background-image: none;
         display: block; /* Resets */
         justify-content: flex-start; /* Resets */
         max-height: none;
-        text-align: justify;
         padding-bottom: 20%;
         padding-left: 8px;
         padding-right: 8px;
@@ -307,11 +350,24 @@ export class GatorpowerApp extends LitElement {
       <header>
         <div class="left-elements">Left</div>
         <h1><span class="hidden">Gatorpower</span></h1>
-        <div class="right-elements">Right</div>
-        <!-- HAS CSS ISSUES START -->
+        <div class="right-elements">
+          <a
+            href="https://github.com/gatorpower"
+            target="_blank"
+            class="github"
+            title="GitHub"
+            ><span class="hidden">Github</span></a
+          >
+          <a
+            href="https://www.linkedin.com/in/philip-tucker-472541a6"
+            target="_blank"
+            class="linkedin"
+            title="LinkedIn"
+            ><span class="hidden">LinkedIn</span></a
+          >
+        </div>
         <div class="svg-corner svg-left"></div>
         <div class="svg-corner svg-right"></div>
-        <!-- HAS CSS ISSUES END -->
       </header>
 
       <section class="hero">
@@ -403,13 +459,9 @@ export class GatorpowerApp extends LitElement {
 
       <main class="main-body">
         <div class="svg-background">
-          <!-- HAS CSS ISSUES START -->
           <div class="svg-left"></div>
-          <!-- HAS CSS ISSUES END -->
           <div class="portrait"></div>
-          <!-- HAS CSS ISSUES START -->
           <div class="svg-right"></div>
-          <!-- HAS CSS ISSUES END -->
         </div>
 
         <h1>Main Body Content</h1>
