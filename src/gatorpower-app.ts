@@ -76,33 +76,39 @@ export class GatorpowerApp extends LitElement {
 
     header .left-elements,
     header .right-elements {
+      width: 30%;
       margin: 0px 15px;
+    }
+
+    header .right-elements {
+      text-align: right;
+    }
+
+    header .right-elements a {
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center center;
+      display: inline-block;
+      height: 50px;
+      width: 50px;
+      outline-color: transparent;
+      border-color: transparent;
+      outline: 0;
+    }
+
+    header .right-elements a:hover,
+    header .right-elements a:active,
+    header .right-elements a:focus {
+      filter: brightness(0) saturate(100%) invert(100%) sepia(2%) saturate(0%)
+        hue-rotate(352deg) brightness(103%) contrast(102%);
     }
 
     .github {
       background-image: url('./assets/gui/github.svg');
-      background-size: contain;
-      background-repeat: no-repeat;
-      background-position: center center;
-      display: inline-block;
-      height: 50px;
-      width: 50px;
-      outline-color: transparent;
-      border-color: transparent;
-      outline: 0;
     }
 
     .linkedin {
       background-image: url('./assets/gui/linkedin.svg');
-      background-size: contain;
-      background-repeat: no-repeat;
-      background-position: center center;
-      display: inline-block;
-      height: 50px;
-      width: 50px;
-      outline-color: transparent;
-      border-color: transparent;
-      outline: 0;
     }
 
     header .svg-corner {
