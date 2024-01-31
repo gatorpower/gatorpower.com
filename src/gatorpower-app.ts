@@ -135,7 +135,7 @@ export class GatorpowerApp extends LitElement {
     }
 
     section.hero {
-      background-image: url('./assets/gui/train.png');
+      background-image: url('./assets/gui/train.jpg');
       background-position: bottom -50px center;
       background-repeat: no-repeat;
       background-size: contain;
