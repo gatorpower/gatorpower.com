@@ -392,47 +392,53 @@ export class GatorpowerApp extends LitElement {
       <section class="hero">
         <div class="box-wrapper">
           <div class="box">
-            <h2>Innovative Web Solutions</h2>
+            <h2>About Us</h2>
             <p>
-              We specialize in developing state-of-the-art web applications that
-              combine functionality with aesthetic appeal. Our team’s expertise
-              spans a range of technologies including <strong>React</strong>,
-              <strong>Vue</strong>, <strong>Angular</strong>,
-              <strong>.NET</strong>, and <strong>Node JS</strong>, enabling us
-              to create responsive and engaging web experiences.
+              Welcome to Gatorpower, your go-to source for comprehensive web
+              development services. Here, we specialize in delivering top-notch
+              web solutions tailored to your specific needs. Our expertise
+              ranges from responsive design and front-end development to robust
+              back-end systems and API integrations. Browse our offerings,
+              explore our demos, and learn how our skills and experience can
+              benefit your business or project.
             </p>
-            <h2>Comprehensive Backend Development</h2>
             <p>
-              Our backend development combines versatility and robustness. We
-              skillfully use <strong>PHP</strong>, <strong>Java</strong>, and
-              <strong>C#</strong>, integrating advanced <strong>SQL</strong> and
-              <strong>NoSQL</strong> database technologies for efficient data
-              management. Our API development expertise ensures secure, scalable
-              solutions, essential for high-performance web applications.
+              Ready to elevate your digital presence? Reach out to us to discuss
+              how we can tailor our web development expertise to your unique
+              business goals. We're here to guide you through every step, from
+              initial concept to final implementation, ensuring your project not
+              only meets but exceeds expectations. Let's collaborate to create a
+              dynamic, impactful web experience that propels your company
+              forward. Connect with us today and take the first step toward
+              transforming your digital strategy.
             </p>
           </div>
         </div>
         <div class="box-wrapper">
           <div class="box">
-            <h2>Cloud Services and DevOps</h2>
+            <h2>What We Do</h2>
             <p>
-              Embracing cloud technologies, we deliver scalable and flexible
-              solutions using <strong>AWS</strong>, <strong>Azure</strong>,
-              <strong>GitHub</strong>, and <strong>Docker</strong>. Our approach
-              ensures robust cloud infrastructure coupled with efficient version
-              control and collaborative workflows, essential for modern web
-              development. Our DevOps practices ensure seamless deployment and
-              management of applications, enhancing performance and reliability.
+              Our team’s expertise spans a range of technologies including
+              <strong>React</strong>, <strong>Vue</strong>,
+              <strong>Angular</strong>, <strong>Lit</strong>,
+              <strong>.NET</strong>, and <strong>Node JS</strong>, enabling us
+              to create responsive and engaging web experiences. We efficiently
+              manage development and deployment using <strong>AWS</strong>,
+              <strong>Azure</strong>, <strong>GitHub</strong>,
+              <strong>Docker</strong>, and CI/CD pipelines, ensuring seamless
+              integration and scalability. Our backend development employs
+              <strong>PHP</strong>, <strong>Java</strong>, <strong>C#</strong>,
+              sophisticated database solutions, and APIs.
             </p>
             <h2>Responsive Design and User Experience</h2>
             <p>
               In our approach to design and user experience, we prioritize
               inclusivity and adherence to the highest standards. Our work
-              complies with Section 508, ensuring accessibility for all users,
-              and we strictly follow <strong>HTML5</strong> standards to
-              guarantee that our websites are not only visually appealing but
-              also functionally robust and universally accessible. This
-              commitment to best practices in design and development is
+              complies with Section 508 of the Rehabilitation Act of 1973,
+              ensuring accessibility for all users, and we strictly follow HTML5
+              standards to guarantee that our websites are not only visually
+              appealing but also functionally robust and universally accessible.
+              This commitment to best practices in design and development is
               fundamental in delivering a seamless, engaging user experience
               across all devices.
             </p>
