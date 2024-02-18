@@ -24,7 +24,8 @@ export class GatorpowerApp extends LitElement {
       min-height: 100vh;
       margin: 0;
       box-sizing: border-box;
-      font-family: Garamond, sans-serif;
+      /* font-family: Garamond, sans-serif; */
+      font-family: Helvetica, sans-serif;
     }
 
     html,
@@ -35,7 +36,7 @@ export class GatorpowerApp extends LitElement {
     }
 
     header {
-      background-color: var(--header-bg-color);
+      background-color: var(--header-bg-color); /* Solid background color */
       box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.4);
       padding: var(--header-padding);
       box-sizing: border-box;
@@ -45,10 +46,24 @@ export class GatorpowerApp extends LitElement {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      /* overflow-x: hidden;  */
     }
 
-    header::after {
+    header::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: url('./assets/gui/header-bg2.jpg');
+      background-repeat: repeat-x;
+      background-size: auto 70px;
+      background-position: top center;
+      pointer-events: none; /* Allows clicks to pass through */
+      z-index: 0;
+    }
+
+    /* header::after {
       content: '';
       display: block;
       position: absolute;
@@ -59,7 +74,12 @@ export class GatorpowerApp extends LitElement {
       background-image: url('./assets/gui/header-flourish.svg');
       background-position: top center;
       background-repeat: no-repeat;
-    }
+    } */
+
+    /***********************************************************************************************************/
+    /***********************************************************************************************************/
+    /***********************************************************************************************************/
+    /***********************************************************************************************************/
 
     header > h1 {
       background-image: url('./assets/gui/main-logo.svg');
@@ -72,12 +92,14 @@ export class GatorpowerApp extends LitElement {
       min-height: 65px;
       padding-top: 5px;
       font-size: 0;
+      z-index: 1;
     }
 
     header .left-elements,
     header .right-elements {
       width: 30%;
       margin: 0px 15px;
+      z-index: 1;
     }
 
     header .right-elements {
@@ -122,17 +144,40 @@ export class GatorpowerApp extends LitElement {
     header .svg-left {
       left: 0px;
       background-image: url('./assets/gui/header-border-fl.svg');
-      background-position: top left;
+      background-position: top left -5px;
       background-repeat: no-repeat;
     }
 
     header .svg-right {
       right: 0px;
       background-image: url('./assets/gui/header-border-fl.svg');
-      background-position: top left;
+      background-position: top left -5px;
       background-repeat: no-repeat;
       transform: scale(-1, 1);
       transform-origin: center;
+    }
+
+    .svg-middle {
+      position: absolute;
+      bottom: calc(-1 * var(--wave-height));
+      width: 100%;
+      height: var(--wave-height);
+      max-height: 100%;
+    }
+
+    .svg-middle > div {
+      position: relative;
+      height: 100%;
+      width: 60%;
+      min-width: 730px;
+      background-image: url('./assets/gui/header-bg2.jpg');
+      background-repeat: repeat-x;
+      background-size: auto 70px;
+      background-position: top center;
+      pointer-events: none;
+      clip-path: url('#svg-middle-flourish-clip');
+      margin: 0 auto;
+      filter: drop-shadow(10px 10px 20px rgba(0, 0, 0, 0.4));
     }
 
     section.hero {
@@ -167,8 +212,13 @@ export class GatorpowerApp extends LitElement {
     }
 
     .hero .box-wrapper {
+      background: linear-gradient(
+        180deg,
+        var(--hero-bg-color) 65%,
+        #eae1cb 100%
+      );
       position: relative;
-      background-color: var(--hero-bg-color);
+      /* background-color: var(--hero-bg-color); */
       box-sizing: border-box;
       padding: 15px 30px;
       border: 1px solid #c6a681;
@@ -313,16 +363,39 @@ export class GatorpowerApp extends LitElement {
         flex-direction: column;
         height: auto;
       }
-
+      header::before {
+        content: none; /* Removes the pseudo-element */
+      }
+      header::after {
+        content: '';
+        display: block;
+        position: absolute;
+        bottom: calc(-1 * var(--wave-height) + 5px);
+        left: 0;
+        width: 100%;
+        height: var(--wave-height);
+        background-image: url('./assets/gui/header-flourish.svg');
+        background-position: top center;
+        background-repeat: no-repeat;
+      }
       header h1 {
         order: -1; /* This ensures h1 is always first */
       }
       header .left-elements,
       header .right-elements {
         margin: 10px;
+        text-align: center;
+      }
+      header .svg-middle {
+        display: none;
       }
       section.hero {
         background-image: none;
+        background: linear-gradient(
+          180deg,
+          var(--hero-bg-color) 33%,
+          #efe8d8 100%
+        );
         display: block; /* Resets */
         justify-content: flex-start; /* Resets */
         max-height: none;
@@ -387,8 +460,30 @@ export class GatorpowerApp extends LitElement {
         </div>
         <div class="svg-corner svg-left"></div>
         <div class="svg-corner svg-right"></div>
+        <div class="svg-middle">
+          <div>
+            <svg
+              data-name="header-flourish"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 1240 115"
+              preserveAspectRatio="xMidYMid meet"
+              width="0"
+              height="0"
+            >
+              <defs>
+                <clipPath
+                  id="svg-middle-flourish-clip"
+                  clipPathUnits="objectBoundingBox"
+                >
+                  <path
+                    d="m0.512,1 c-0.009,0,-0.018,0,-0.027,0 c-0.002,-0.004,-0.004,-0.009,-0.006,-0.011 c-0.031,-0.032,-0.062,-0.121,-0.09,-0.321 c-0.001,-0.009,-0.003,-0.012,-0.005,-0.004 c-0.021,0.135,-0.042,0.217,-0.065,0.264 c-0.012,0.025,-0.024,0.046,-0.036,0.045 c-0.01,-0.001,-0.019,-0.031,-0.029,-0.059 c-0.047,-0.136,-0.093,-0.329,-0.138,-0.548 C0.086,0.219,0.055,0.1,0.023,0.04 C0.015,0.025,0.008,0.013,0,0 c0.333,0,0.667,0,1,0 c-0.003,0.004,-0.005,0.009,-0.008,0.013 c-0.033,0.047,-0.066,0.149,-0.098,0.301 c-0.047,0.225,-0.094,0.432,-0.142,0.581 c-0.017,0.052,-0.034,0.104,-0.052,0.074 c-0.03,-0.051,-0.059,-0.133,-0.086,-0.313 c-0.001,-0.009,-0.003,-0.009,-0.005,0 c-0.024,0.176,-0.049,0.268,-0.076,0.313 c-0.007,0.013,-0.015,0.022,-0.022,0.032"
+                  />
+                </clipPath>
+              </defs>
+            </svg>
+          </div>
+        </div>
       </header>
-
       <section class="hero">
         <div class="box-wrapper">
           <div class="box">

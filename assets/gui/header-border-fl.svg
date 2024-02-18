@@ -1,13 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <svg id="header-border-fl" data-name="header-border-fl" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 203 60">
   <defs>
-  <filter id="dropshadow" x="-40%" y="-40%" width="180%" height="180%">
-    <feOffset result="offOut" in="SourceGraphic" dx="10" dy="10" />
-    <feColorMatrix result="matrixOut" in="offOut" type="matrix"
-      values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.1 0" />
-    <feGaussianBlur result="blurOut" in="matrixOut" stdDeviation="10" />
-    <feBlend in="SourceGraphic" in2="blurOut" mode="normal" />
-  </filter>
+    <style>
+      .cls-1 {
+        stroke-width: 0px;
+      }
+    </style>
+    <filter id="dropshadow" x="-40%" y="-40%" width="180%" height="180%">
+      <feOffset result="offOut" in="SourceGraphic" dx="10" dy="10" />
+      <feColorMatrix result="matrixOut" in="offOut" type="matrix"
+        values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.1 0" />
+      <feGaussianBlur result="blurOut" in="matrixOut" stdDeviation="10" />
+      <feBlend in="SourceGraphic" in2="blurOut" mode="normal" />
+    </filter>
   </defs>
   <g id="Layer_1-2" data-name="Layer 1">
     <path class="cls-1" fill="#343538" filter="url(#dropshadow)" d="m86,0c-1.31,1.18-2.49,2.54-3.94,3.52C61.09,17.67,37.59,24.69,12.78,28c-1.61.21-3.19.66-4.78,1H0C0,19.33,0,9.67,0,0c28.67,0,57.33,0,86,0Z"/>
