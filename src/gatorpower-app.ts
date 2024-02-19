@@ -63,24 +63,6 @@ export class GatorpowerApp extends LitElement {
       z-index: 0;
     }
 
-    /* header::after {
-      content: '';
-      display: block;
-      position: absolute;
-      bottom: calc(-1 * var(--wave-height) + 5px);
-      left: 0;
-      width: 100%;
-      height: var(--wave-height);
-      background-image: url('./assets/gui/header-flourish.svg');
-      background-position: top center;
-      background-repeat: no-repeat;
-    } */
-
-    /***********************************************************************************************************/
-    /***********************************************************************************************************/
-    /***********************************************************************************************************/
-    /***********************************************************************************************************/
-
     header > h1 {
       background-image: url('./assets/gui/main-logo.svg');
       background-size: contain;
@@ -165,11 +147,12 @@ export class GatorpowerApp extends LitElement {
       max-height: 100%;
     }
 
-    .svg-middle > div {
+    .svg-middle > div.clip-path {
       position: relative;
-      height: 100%;
-      width: 60%;
-      min-width: 730px;
+      height: 40px;
+      width: 30%;
+      min-width: 500px;
+      top: -50px;
       background-image: url('./assets/gui/header-bg2.jpg');
       background-repeat: repeat-x;
       background-size: auto 70px;
@@ -178,6 +161,20 @@ export class GatorpowerApp extends LitElement {
       clip-path: url('#svg-middle-flourish-clip');
       margin: 0 auto;
       filter: drop-shadow(10px 10px 20px rgba(0, 0, 0, 0.4));
+      z-index: 2;
+    }
+
+    .svg-middle > div.shadow-path {
+      position: relative;
+      height: 50px;
+      width: 30%;
+      min-width: 500px;
+      margin: 0 auto;
+      background-image: url('./assets/gui/header-flourish.svg');
+      background-position: top center;
+      background-repeat: no-repeat;
+      background-size: 100%;
+      z-index: 1;
     }
 
     section.hero {
@@ -461,7 +458,8 @@ export class GatorpowerApp extends LitElement {
         <div class="svg-corner svg-left"></div>
         <div class="svg-corner svg-right"></div>
         <div class="svg-middle">
-          <div>
+          <div class="shadow-path"></div>
+          <div class="clip-path">
             <svg
               data-name="header-flourish"
               xmlns="http://www.w3.org/2000/svg"
