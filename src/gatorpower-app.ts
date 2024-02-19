@@ -74,7 +74,20 @@ export class GatorpowerApp extends LitElement {
       min-height: 65px;
       padding-top: 5px;
       font-size: 0;
-      z-index: 1;
+      z-index: 4;
+    }
+
+    header .middle-elements {
+      position: absolute;
+      top: 0px;
+      width: 100%;
+      height: 215px;
+      background-image: url('./assets/gui/gp.svg');
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center center;
+      pointer-events: none;
+      z-index: 3;
     }
 
     header .left-elements,
@@ -377,6 +390,11 @@ export class GatorpowerApp extends LitElement {
       }
       header h1 {
         order: -1; /* This ensures h1 is always first */
+        margin-bottom: 85px;
+      }
+      header .middle-elements {
+        height: 140px;
+        top: 10px;
       }
       header .left-elements,
       header .right-elements {
@@ -439,6 +457,7 @@ export class GatorpowerApp extends LitElement {
       <header>
         <div class="left-elements">Left</div>
         <h1><span class="hidden">Gatorpower</span></h1>
+        <div class="middle-elements"></div>
         <div class="right-elements">
           <a
             href="https://github.com/gatorpower"
