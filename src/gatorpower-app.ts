@@ -79,7 +79,7 @@ export class GatorpowerApp extends LitElement {
 
     header .middle-elements {
       position: absolute;
-      top: 0px;
+      top: 115px;
       width: 100%;
       height: 215px;
       background-image: url('./assets/gui/gp.svg');
@@ -163,8 +163,7 @@ export class GatorpowerApp extends LitElement {
     .svg-middle > div.clip-path {
       position: relative;
       height: 40px;
-      width: 30%;
-      min-width: 500px;
+      width: 500px;
       top: -50px;
       background-image: url('./assets/gui/header-bg2.jpg');
       background-repeat: repeat-x;
@@ -180,8 +179,7 @@ export class GatorpowerApp extends LitElement {
     .svg-middle > div.shadow-path {
       position: relative;
       height: 50px;
-      width: 30%;
-      min-width: 500px;
+      width: 500px;
       margin: 0 auto;
       background-image: url('./assets/gui/header-flourish.svg');
       background-position: top center;
@@ -303,6 +301,54 @@ export class GatorpowerApp extends LitElement {
       background-position: -5px bottom;
       background-size: 100%;
       background-repeat: no-repeat;
+      transform: scaleX(-1);
+    }
+
+    .svg-background .svg-l1,
+    .svg-background .svg-r1,
+    .svg-background .svg-l2,
+    .svg-background .svg-r2{
+      position: absolute;
+      height: 100%;
+      bottom: -5px;
+      background-position: 0px bottom;
+      background-size: 100% auto;
+      background-repeat: no-repeat;
+    }
+
+    .svg-background .svg-l1,
+    .svg-background .svg-r1 {
+      width: 17%;
+    }
+
+    .svg-background .svg-l2,
+    .svg-background .svg-r2 {
+      width: 28%;
+    }
+
+    .svg-background .svg-l1 {
+      left: 0px;
+      background-image: url('./assets/gui/flourish-trim1.svg'),
+        url('./assets/gui/flourish-trim-bg1.svg');
+    }
+
+    .svg-background .svg-r1 {
+      right: 0px;
+      background-image: url('./assets/gui/flourish-trim1.svg'),
+        url('./assets/gui/flourish-trim-bg1.svg');
+      transform: scaleX(-1);
+    }
+
+    .svg-background .svg-l2 {
+      left: 17%;
+      background-image: url('./assets/gui/flourish-trim2.svg'),
+        url('./assets/gui/flourish-trim-bg2.svg');
+    }
+
+    .svg-background .svg-r2 {
+      right: 17%;
+      background-image: url('./assets/gui/flourish-trim2.svg'),
+        url('./assets/gui/flourish-trim-bg2.svg');
       transform: scaleX(-1);
     }
 
@@ -560,9 +606,11 @@ export class GatorpowerApp extends LitElement {
 
       <main class="main-body">
         <div class="svg-background">
-          <div class="svg-left"></div>
+          <div class="svg-l1"></div>
+          <div class="svg-l2"></div>
           <div class="portrait"></div>
-          <div class="svg-right"></div>
+          <div class="svg-r2"></div>
+          <div class="svg-r1"></div>
         </div>
 
         <h1>Main Body Content</h1>
