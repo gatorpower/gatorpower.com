@@ -1,104 +1,36 @@
-<p align="center">
-  <img src="https://raw.githubusercontent.com/gatorpower/gatorpower.com/main/assets/gui/victor.jpg" alt="Logo" width="150">
-</p>
+This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
+## Getting Started
 
-# Gatorpower.com
+First, run the development server:
 
-Welcome to Gatorpower.com, a dynamic and robust web application utilizing the best of modern web technologies for a seamless user experience.
-
-[![Built with open-wc recommendations](https://img.shields.io/badge/built%20with-open--wc-blue.svg)](https://github.com/open-wc)
-
-## Description
-
-Gatorpower.com is a testament to cutting-edge web development, embodying a mission to leverage a full spectrum of modern technologies for an unparalleled user experience. Our platform is engineered as a showcase of expertise in diverse areas, including the reactive paradigms of LitElement, the structured routing of Vaadin Router, and the rigorous application of TypeScript for scalable, maintainable code. By integrating these technologies with a Rollup-based build system, we ensure efficient delivery and performance. Our commitment extends beyond functionality, emphasizing code quality and best practices with thorough linting, formatting, and testing strategies. Gatorpower.com is not just a web application; it's a confluence of innovation, dedication, and a relentless pursuit of excellence in the web development arena.
-
-## Quickstart
-
-To set up the project:
-
-```sh
-npm install
-# Ensure you have node 10 & npm 6 or higher
+```bash
+npm run dev
+# or
+yarn dev
+# or
+pnpm dev
+# or
+bun dev
 ```
 
-## Development
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-To start the development server:
+You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
-```sh
-npm run start
-```
+This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
-This command bundles your application with Rollup in watch mode and serves it with live reloading at `http://localhost:10001`.
+## Learn More
 
-## Building for Production
+To learn more about Next.js, take a look at the following resources:
 
-To create a production build:
+- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
+- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
-```sh
-npm run build
-```
+You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
 
-This command bundles your application with Rollup and outputs the files to the `dist` directory.
+## Deploy on Vercel
 
-## Running Tests
+The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
-To run tests:
-
-```sh
-npm run test
-```
-
-For continuous testing mode:
-
-```sh
-npm run test:watch
-```
-
-## Linting and Formatting
-
-- **Linting:** To lint your code for any code quality issues:
-
-  ```sh
-  npm run lint
-  ```
-
-- **Formatting:** To format your code according to prettier standards:
-
-  ```sh
-  npm run format
-  ```
-
-## Tooling Configs
-
-For most of the tools, the configuration is in the `package.json` to reduce the amount of files in your project.
-
-If you customize the configuration a lot, you can consider moving them to individual files.
-
-## Features
-
-- **LitElement**: Utilize powerful web components.
-- **Vaadin Router**: Client-side navigation made simple.
-- **TypeScript**: Enjoy the benefits of a statically typed language.
-- **Rollup**: Efficient bundling and asset management.
-
-## Contributing
-
-Contributions are what make the open-source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
-
-1. Fork the Project
-2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the Branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
-
-## License
-
-Distributed under the MIT License. See `LICENSE` for more information.
-
-## Contact
-
-Philip Tucker - [@gatorpowerpt](https://twitter.com/gatorpowerpt)
-
-[https://github.com/gatorpower/gatorpower.com](https://github.com/gatorpower/gatorpower.com)
+Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.

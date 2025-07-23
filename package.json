@@ -1,60 +1,24 @@
 {
-  "name": "gatorpower-app",
-  "description": "Gatorpower.com",
-  "license": "MIT",
-  "author": "gatorpower-app",
-  "version": "0.0.0",
-  "type": "module",
+  "name": "gatorpower.com",
+  "version": "0.1.0",
+  "private": true,
   "scripts": {
-    "test": "tsc && wtr --coverage",
-    "test:watch": "tsc && concurrently -k -r \"tsc --watch --preserveWatchOutput\" \"wtr --watch\"",
-    "analyze": "cem analyze --litelement",
-    "start": "rollup -c -w",
-    "build": "rollup -c"
+    "dev": "next dev --turbopack",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
   },
   "dependencies": {
-    "@vaadin/router": "^2.0.0",
-    "lit": "^3.3.0"
+    "react": "19.1.0",
+    "react-dom": "19.1.0",
+    "next": "15.4.2"
   },
   "devDependencies": {
-    "@custom-elements-manifest/analyzer": "^0.10.4",
-    "@open-wc/testing": "^4.0.0",
-    "@rollup/plugin-node-resolve": "^16.0.1",
-    "@rollup/plugin-typescript": "^12.1.2",
-    "@web/dev-server": "^0.4.6",
-    "@web/test-runner": "^0.20.2",
-    "concurrently": "^9.1.2",
-    "cross-env": "^7.0.3",
-    "husky": "^9.1.7",
-    "rollup": "^4.41.1",
-    "rollup-plugin-copy": "^3.5.0",
-    "rollup-plugin-css-only": "^4.5.2",
-    "rollup-plugin-lit-css": "^5.0.2",
-    "rollup-plugin-livereload": "^2.0.5",
-    "rollup-plugin-serve": "^3.0.0",
-    "sass": "^1.89.1",
-    "sass-loader": "^16.0.5",
-    "tslib": "^2.8.1",
-    "typescript": "^5.8.3"
-  },
-  "eslintConfig": {
-    "extends": [
-      "@open-wc"
-    ],
-    "rules": {
-      "no-unused-vars": "off",
-      "@typescript-eslint/no-unused-vars": [
-        "error"
-      ],
-      "import/no-unresolved": "off",
-      "import/extensions": [
-        "error",
-        "always",
-        {
-          "ignorePackages": true
-        }
-      ]
-    }
-  },
-  "customElements": "custom-elements.json"
+    "typescript": "^5",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "@tailwindcss/postcss": "^4",
+    "tailwindcss": "^4"
+  }
 }
