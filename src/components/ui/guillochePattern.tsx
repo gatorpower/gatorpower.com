@@ -1,33 +1,43 @@
 'use client'
 import {useRef, useEffect, useLayoutEffect} from "react";
-import { BoundaryCurve } from "@/lib/boundaryCurve";
+import { FormulaConfig, BoundaryCurve, cartesianDraw } from "@/lib/boundaryCurve";
 
 interface GuillochePatternProps {
   width: number;
   height: number;
+  topBoundary?: FormulaConfig;
+  bottomBoundary?: FormulaConfig;
 }
 
-export default function GuillochePattern({ width, height }: GuillochePatternProps) {
+export default function GuillochePattern({ 
+  width, 
+  height,
+  topBoundary,
+  bottomBoundary 
+}: GuillochePatternProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const topBoundaryRef = useRef<BoundaryCurve | null>(null);
-  const formulas = {
-    topBoundary: {
-      fn: (t: number): number => {
-        return 0.5 + 0.5 * Math.sin(t * Math.PI * 2);
-      },
-      startX: 0, /* percent */
-      startY: 0, /* percent */
-    },
-    'lowerBoundary': {
-      fn: (t: number): number => {
-        return t;
-      },
-      startX: 0, /* percent */
-      startY: 0, /* percent */ 
-    }
+  const topBoundRef = useRef<BoundaryCurve | null>(null);
+  const bottomBoundRef = useRef<BoundaryCurve | null>(null);
+  
+  // Default formulas
+  const defaultTopBoundary: FormulaConfig = {
+    fn: (t: number): number => 0, // Straight line at 0
+    startX: 0,
+    startY: 100, // Position at very top (100%)
   };
 
-  useEffect(() => {
+  const defaultBottomBoundary: FormulaConfig = {
+    fn: (t: number): number => 0, // Straight line at 0
+    startX: 0,
+    startY: 0, // Position at very bottom (0%)
+  };
+
+  // Use provided or default
+  const topFormula = topBoundary ?? defaultTopBoundary;
+  const bottomFormula = bottomBoundary ?? defaultBottomBoundary;
+
+  // Extract common logic into a function
+  const setupAndDraw = () => {
     if (!canvasRef.current) return;
     
     const canvas = canvasRef.current;
@@ -37,48 +47,43 @@ export default function GuillochePattern({ width, height }: GuillochePatternProp
     canvas.width = width;
     canvas.height = height;
 
-    topBoundaryRef.current = new BoundaryCurve(canvas);
-    topBoundaryRef.current.formulaSource(formulas.topBoundary);
+    // Create or update boundary curves
+    if (!topBoundRef.current) {
+      topBoundRef.current = new BoundaryCurve(canvas);
+    } else {
+      topBoundRef.current.resizePoints();
+    }
 
-    // Clear canvas
+    if (!bottomBoundRef.current) {
+      bottomBoundRef.current = new BoundaryCurve(canvas);
+    } else {
+      bottomBoundRef.current.resizePoints();
+    }
+
+    // Populate with formulas
+    topBoundRef.current.fromFormula(topFormula);
+    bottomBoundRef.current.fromFormula(bottomFormula);
+
+    // Clear and draw
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-
+    
     ctx.strokeStyle = '#3b82f6';
-    ctx.lineWidth = 2; 
-    topBoundaryRef.current.cartesianDraw(ctx);
-    console.log('My points',topBoundaryRef.current.points)
+    ctx.lineWidth = 2;
+    cartesianDraw(ctx, topBoundRef.current, canvas);
+
+    ctx.strokeStyle = '#ef4444';
+    ctx.lineWidth = 2;
+    cartesianDraw(ctx, bottomBoundRef.current, canvas);
+  };
+
+  useEffect(() => {
+    setupAndDraw();
   }, []);
 
   // Handle resize
   useLayoutEffect(() => {
-    const handleResize = () => {
-      if (!canvasRef.current || !topBoundaryRef.current) return;
-      
-      const canvas = canvasRef.current;
-      const ctx = canvas.getContext('2d');
-      if (!ctx) return;
-
-      canvas.width = width;
-      canvas.height = height;
-
-      /* update curve boundary data */
-      topBoundaryRef.current.resizePoints();
-      topBoundaryRef.current.formulaSource(formulas.topBoundary);
-
-      //ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-      ctx.strokeStyle = '#3b82f6';
-      ctx.lineWidth = 2; 
-      topBoundaryRef.current.cartesianDraw(ctx);
-    };
-
-    window.addEventListener('resize', handleResize);
-
-    /* cleanup */
-    return () => {
-      window.removeEventListener('resize', handleResize);
-    };
-  }, [width, height]);
+    setupAndDraw();
+  }, [width, height, topFormula, bottomFormula]);
 
   return (
     <>

@@ -1,9 +1,9 @@
-interface Points {
+export interface Points {
   x: Float32Array;
   y: Float32Array;
 }
 
-interface FormulaConfig {
+export interface FormulaConfig {
   fn: (t: number) => number;
   startX?: number; // 0-100 (percentage)
   startY?: number; // 0-100 (percentage)
@@ -12,25 +12,24 @@ interface FormulaConfig {
 export class BoundaryCurve {
   private canvas: HTMLCanvasElement;
   private _points: Points;
-  private offsetX: number = 0; // Store offset
-  private offsetY: number = 0; // Store offset
+  public offsetX: number = 0;
+  public offsetY: number = 0;
 
   constructor(canvas: HTMLCanvasElement) {
     this.canvas = canvas;
     this._points = this.createPointsForCurrentResolution();
   }
 
-  private clamp(value: number, min: number, max: number): number {
-    return Math.max(min, Math.min(max, value));
-  }
-
-  /* array length must match to use (x, y) */
   private createPointsForCurrentResolution(): Points {
     const pointCount = this.canvas.width * 2;
     return {
       x: new Float32Array(pointCount),
       y: new Float32Array(pointCount),
     };
+  }
+
+  private clamp(value: number, min: number, max: number): number {
+    return Math.max(min, Math.min(max, value));
   }
 
   get points(): Readonly<Points> {
@@ -41,12 +40,11 @@ export class BoundaryCurve {
     this._points = this.createPointsForCurrentResolution();
   }
 
-  formulaSource(config: FormulaConfig): void {
+  fromFormula(config: FormulaConfig): void {
     if (typeof config.fn !== 'function') {
-      throw new Error('formulaSource requires a function in config.fn');
+      throw new Error('fromFormula requires a function in config.fn');
     }
     
-    // Store the offsets for later use in draw()
     this.offsetX = this.clamp(config.startX ?? 0, 0, 100);
     this.offsetY = this.clamp(config.startY ?? 0, 0, 100);
     
@@ -66,62 +64,65 @@ export class BoundaryCurve {
     }
   }
 
-  /* Cartesian style, starts at bottom left */
-  cartesianDraw(ctx: CanvasRenderingContext2D): void {
-    const scaleX = this.canvas.width;
-    const scaleY = this.canvas.height;
-    const len = this._points.x.length;
-
-    if (len === 0) return;
-
-    // Use stored offsets
-    const offsetXNormalized = this.offsetX / 100;
-    const offsetYNormalized = this.offsetY / 100;
-
-    ctx.beginPath();
-    ctx.moveTo(
-      (this._points.x[0] + offsetXNormalized) * scaleX, 
-      (1 - (this._points.y[0] + offsetYNormalized)) * scaleY
-    );
-    
-    for (let i = 1; i < len; i++) {
-      ctx.lineTo(
-        (this._points.x[i] + offsetXNormalized) * scaleX, 
-        (1 - (this._points.y[i] + offsetYNormalized)) * scaleY
-      );
-    }
-    
-    ctx.stroke();
+  fromImage(imageData: ImageData): void {
+    const traced = this.traceImage(imageData);
+    this._points = this.subsample(traced, this._points.x.length);
   }
 
-  // private imageSource(imageData: ImageData): void {
-  //   const traced = this.traceImage(imageData);
-  //   this.points = this.subsample(traced, this.points.x.length);
-  // }
+  private traceImage(imageData: ImageData): Points {
+    const fullPoints: Points = {
+      x: new Float32Array(imageData.width),
+      y: new Float32Array(imageData.width),
+    };
+    // ... your tracing logic
+    return fullPoints;
+  }
 
-  // private traceImage(imageData: ImageData): Points {
-  //   // Placeholder - implement your pixel tracing logic
-  //   const fullPoints: Points = {
-  //     x: new Float32Array(imageData.width),
-  //     y: new Float32Array(imageData.width),
-  //   };
-  //   // ... your tracing logic
-  //   return fullPoints;
-  // }
+  private subsample(fullTrace: Points, targetPoints: number): Points {
+    const step = fullTrace.x.length / targetPoints;
+    const result: Points = {
+      x: new Float32Array(targetPoints),
+      y: new Float32Array(targetPoints),
+    };
+    
+    for (let i = 0; i < targetPoints; i++) {
+      const srcIndex = Math.floor(i * step);
+      result.x[i] = this.clamp(fullTrace.x[srcIndex], 0, 1);
+      result.y[i] = this.clamp(fullTrace.y[srcIndex], 0, 1);
+    }
+    
+    return result;
+  }
+}
 
-  // private subsample(fullTrace: Points, targetPoints: number): Points {
-  //   const step = fullTrace.x.length / targetPoints;
-  //   const result: Points = {
-  //     x: new Float32Array(targetPoints),
-  //     y: new Float32Array(targetPoints),
-  //   };
-    
-  //   for (let i = 0; i < targetPoints; i++) {
-  //     const srcIndex = Math.floor(i * step);
-  //     result.x[i] = fullTrace.x[srcIndex];
-  //     result.y[i] = fullTrace.y[srcIndex];
-  //   }
-    
-  //   return result;
-  // }
+// Cartesian drawing function (flips Y-axis)
+export function cartesianDraw(
+  ctx: CanvasRenderingContext2D,
+  curve: BoundaryCurve,
+  canvas: HTMLCanvasElement
+): void {
+  const scaleX = canvas.width;
+  const scaleY = canvas.height;
+  const points = curve.points;
+  const len = points.x.length;
+
+  if (len === 0) return;
+
+  const offsetXNormalized = curve.offsetX / 100;
+  const offsetYNormalized = curve.offsetY / 100;
+
+  ctx.beginPath();
+  ctx.moveTo(
+    (points.x[0] + offsetXNormalized) * scaleX,
+    (1 - (points.y[0] + offsetYNormalized)) * scaleY
+  );
+
+  for (let i = 1; i < len; i++) {
+    ctx.lineTo(
+      (points.x[i] + offsetXNormalized) * scaleX,
+      (1 - (points.y[i] + offsetYNormalized)) * scaleY
+    );
+  }
+
+  ctx.stroke();
 }
