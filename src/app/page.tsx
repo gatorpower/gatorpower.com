@@ -23,30 +23,17 @@ export default function Homie() {
   }, []);
   return (
     <>
-      <header>
-        It's what the ladies want
-      </header>
       <main>
         <GuillochePattern 
           width={dimensions.width} 
-          height={dimensions.height}
+          height={800}
           topBoundary={{
             fn: (t) => Math.sqrt(1 - Math.pow(1 - t, 2)),
             startX: 0,
             startY: 0
           }}
         />
-        <Image
-          src="/images/victor.jpg"
-          alt="Portrait of Victor E Gator"
-          width={180}
-          height={38}
-          priority
-        />
       </main>
-      <footer>
-        It's what the gentlemen want
-      </footer>
     </>
   );
 }

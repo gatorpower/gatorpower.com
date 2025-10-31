@@ -17,27 +17,27 @@ export class BoundaryCurve {
 
   constructor(canvas: HTMLCanvasElement) {
     this.canvas = canvas;
-    this._points = this.createPointsForCurrentResolution();
-  }
-
-  private createPointsForCurrentResolution(): Points {
-    const pointCount = this.canvas.width * 2;
-    return {
-      x: new Float32Array(pointCount),
-      y: new Float32Array(pointCount),
-    };
+    const pointCount = canvas.width * 2;
+    this._points = this.createPoints(pointCount);
   }
 
   private clamp(value: number, min: number, max: number): number {
     return Math.max(min, Math.min(max, value));
   }
 
+  private createPoints(pointCount: number): Points {
+    return {
+      x: new Float32Array(pointCount),
+      y: new Float32Array(pointCount),
+    };
+  }
+
   get points(): Readonly<Points> {
     return this._points;
   }
 
-  resizePoints(): void {
-    this._points = this.createPointsForCurrentResolution();
+  resize(pointCount: number): void {
+    this._points = this.createPoints(pointCount);
   }
 
   fromFormula(config: FormulaConfig): void {
