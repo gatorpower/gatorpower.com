@@ -25,12 +25,17 @@ export default function Homie() {
     <>
       <main>
         <GuillochePattern 
-          width={dimensions.width} 
-          height={800}
+          width={400} 
+          height={400}
           topBoundary={{
-            fn: (t) => Math.sqrt(1 - Math.pow(1 - t, 2)),
-            startX: 0,
-            startY: 0
+            fn: (t: number): number => t,
+            xRange: [0, 100],   // Full width
+            yRange: [0, 100]    // Full height
+          }}
+          bottomBoundary={{
+            fn: (t: number): number => t, // Straight line at 0
+            xRange: [50, 100],  // Only right half
+            yRange: [0, 100]    // Full height
           }}
         />
       </main>

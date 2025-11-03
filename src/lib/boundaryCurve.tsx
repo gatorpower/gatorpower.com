@@ -1,3 +1,7 @@
+// ============================================================================
+// boundaryCurve.ts - Complete Implementation with Ranges
+// ============================================================================
+
 export interface Points {
   x: Float32Array;
   y: Float32Array;
@@ -5,15 +9,15 @@ export interface Points {
 
 export interface FormulaConfig {
   fn: (t: number) => number;
-  startX?: number; // 0-100 (percentage)
-  startY?: number; // 0-100 (percentage)
+  xRange?: [number, number]; // [min, max] e.g., [50, 100]
+  yRange?: [number, number]; // [min, max] e.g., [0, 100]
 }
 
 export class BoundaryCurve {
   private canvas: HTMLCanvasElement;
   private _points: Points;
-  public offsetX: number = 0;
-  public offsetY: number = 0;
+  public xRange: [number, number] = [0, 100];
+  public yRange: [number, number] = [0, 100];
 
   constructor(canvas: HTMLCanvasElement) {
     this.canvas = canvas;
@@ -45,23 +49,68 @@ export class BoundaryCurve {
       throw new Error('fromFormula requires a function in config.fn');
     }
     
-    this.offsetX = this.clamp(config.startX ?? 0, 0, 100);
-    this.offsetY = this.clamp(config.startY ?? 0, 0, 100);
+    // Range limits (convert 0-100 to 0-1)
+    const xMin = this.clamp(config.xRange?.[0] ?? 0, 0, 100) / 100;
+    const xMax = this.clamp(config.xRange?.[1] ?? 100, 0, 100) / 100;
+    const yMin = this.clamp(config.yRange?.[0] ?? 0, 0, 100) / 100;
+    const yMax = this.clamp(config.yRange?.[1] ?? 100, 0, 100) / 100;
     
-    const len = this._points.x.length;
+    this.xRange = [xMin * 100, xMax * 100];
+    this.yRange = [yMin * 100, yMax * 100];
     
-    for (let i = 0; i < len; i++) {
-      const t = i / (len - 1);
-      this._points.x[i] = t;
+    // Calculate available dimensions
+    const availableWidth = xMax - xMin;
+    const availableHeight = yMax - yMin;
+    
+    // Original canvas aspect ratio
+    const canvasAspectRatio = this.canvas.width / this.canvas.height;
+    
+    // Available box aspect ratio
+    const availableAspectRatio = availableWidth / availableHeight;
+    
+    // Determine constrained dimensions (maintain original aspect ratio)
+    let constrainedWidth: number;
+    let constrainedHeight: number;
+    
+    if (availableAspectRatio > canvasAspectRatio) {
+      // Width is limiting factor
+      constrainedHeight = availableHeight;
+      constrainedWidth = constrainedHeight * canvasAspectRatio;
+    } else {
+      // Height is limiting factor
+      constrainedWidth = availableWidth;
+      constrainedHeight = constrainedWidth / canvasAspectRatio;
+    }
+    
+    // Actual drawing bounds (start from bottom-left)
+    const drawXMin = xMin;
+    const drawXMax = xMin + constrainedWidth;
+    const drawYMin = yMin;
+    const drawYMax = yMin + constrainedHeight;
+    
+    const originalLen = this._points.x.length;
+    const tempX: number[] = [];
+    const tempY: number[] = [];
+    
+    for (let i = 0; i < originalLen; i++) {
+      const t = i / (originalLen - 1);
       
-      const result = config.fn(t);
+      // Map t to the constrained drawing box
+      const x = drawXMin + (t * constrainedWidth);
+      const y = drawYMin + (config.fn(t) * constrainedHeight);
       
-      if (typeof result !== 'number' || !isFinite(result)) {
-        throw new Error(`Formula function must return a finite number. Got ${result} at t=${t}`);
+      if (typeof y !== 'number' || !isFinite(y)) {
+        throw new Error(`Formula function must return a finite number.`);
       }
       
-      this._points.y[i] = this.clamp(result, 0, 1);
+      tempX.push(x);
+      tempY.push(y);
     }
+    
+    this._points = {
+      x: new Float32Array(tempX),
+      y: new Float32Array(tempY)
+    };
   }
 
   fromImage(imageData: ImageData): void {
@@ -95,7 +144,10 @@ export class BoundaryCurve {
   }
 }
 
-// Cartesian drawing function (flips Y-axis)
+// ============================================================================
+// Drawing Function
+// ============================================================================
+
 export function cartesianDraw(
   ctx: CanvasRenderingContext2D,
   curve: BoundaryCurve,
@@ -108,21 +160,91 @@ export function cartesianDraw(
 
   if (len === 0) return;
 
-  const offsetXNormalized = curve.offsetX / 100;
-  const offsetYNormalized = curve.offsetY / 100;
-
   ctx.beginPath();
   ctx.moveTo(
-    (points.x[0] + offsetXNormalized) * scaleX,
-    (1 - (points.y[0] + offsetYNormalized)) * scaleY
+    points.x[0] * scaleX,
+    (1 - points.y[0]) * scaleY
   );
 
   for (let i = 1; i < len; i++) {
     ctx.lineTo(
-      (points.x[i] + offsetXNormalized) * scaleX,
-      (1 - (points.y[i] + offsetYNormalized)) * scaleY
+      points.x[i] * scaleX,
+      (1 - points.y[i]) * scaleY
     );
   }
 
   ctx.stroke();
+}
+
+// ============================================================================
+// Distance Calculation
+// ============================================================================
+
+interface DistanceData {
+  distances: Float32Array;
+  maxDistance: number;
+}
+
+export function calculateDistances(
+  topBoundary: BoundaryCurve,
+  bottomBoundary: BoundaryCurve
+): DistanceData {
+  const topPoints = topBoundary.points;
+  const bottomPoints = bottomBoundary.points;
+  const len = topPoints.x.length;
+  
+  const distances = new Float32Array(len);
+  let maxDistance = 0;
+  
+  for (let i = 0; i < len; i++) {
+    // Simple Euclidean distance - points already contain all positioning info
+    const dx = topPoints.x[i] - bottomPoints.x[i];
+    const dy = topPoints.y[i] - bottomPoints.y[i];
+    const distance = Math.sqrt(dx * dx + dy * dy);
+    
+    distances[i] = distance;
+    maxDistance = Math.max(maxDistance, distance);
+  }
+  
+  return { distances, maxDistance };
+}
+
+// ============================================================================
+// Debug Canvas Drawing
+// ============================================================================
+
+export function drawDebugCanvas(
+  debugCtx: CanvasRenderingContext2D,
+  debugCanvas: HTMLCanvasElement,
+  distances: Float32Array,
+  maxDistance: number,
+  topWasLonger: boolean
+): void {
+  // Canvas dimensions
+  debugCanvas.width = distances.length;  // One pixel per distance measurement
+  debugCanvas.height = Math.ceil(maxDistance * 1000); // Scale for visibility
+  
+  debugCtx.clearRect(0, 0, debugCanvas.width, debugCanvas.height);
+  
+  // Draw vertical lines representing distances
+  debugCtx.strokeStyle = '#10b981';
+  debugCtx.lineWidth = 1;
+  
+  for (let i = 0; i < distances.length; i++) {
+    const lineHeight = (distances[i] / maxDistance) * debugCanvas.height;
+    
+    debugCtx.beginPath();
+    
+    if (topWasLonger) {
+      // Draw from top down
+      debugCtx.moveTo(i, 0);
+      debugCtx.lineTo(i, lineHeight);
+    } else {
+      // Draw from bottom up
+      debugCtx.moveTo(i, debugCanvas.height);
+      debugCtx.lineTo(i, debugCanvas.height - lineHeight);
+    }
+    
+    debugCtx.stroke();
+  }
 }
