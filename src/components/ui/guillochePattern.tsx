@@ -1,5 +1,5 @@
 // ============================================================================
-// components/guillochePattern.tsx - Clean component (WORKING VERSION)
+// components/guillochePattern.tsx
 // ============================================================================
 
 'use client'
@@ -11,8 +11,12 @@ import {
 import {
   cartesianDraw,
   calculateDistances,
-  drawDebugCanvas
+  drawDebugCanvas,
+  drawDebugPattern,
+  drawMappedDebugPattern,
+  drawMappedPattern,
 } from "@/lib/drawingUtils";
+import { PatternMapper } from "@/lib/patternMapper";
 
 interface GuillochePatternProps {
   width: number;
@@ -31,6 +35,7 @@ export default function GuillochePattern({
   const debugCanvasRef = useRef<HTMLCanvasElement>(null);
   const topBoundRef = useRef<BoundaryCurve | null>(null);
   const bottomBoundRef = useRef<BoundaryCurve | null>(null);
+  const patternMapperRef = useRef<PatternMapper | null>(null);
   
   const defaultTopBoundary: FormulaConfig = {
     fn: (t: number): number => 0,
@@ -87,11 +92,16 @@ export default function GuillochePattern({
       topWasLonger = false;
     }
     
-    const { distances, maxDistance } = calculateDistances(
+    patternMapperRef.current = new PatternMapper(
       topBoundRef.current,
       bottomBoundRef.current
     );
     
+    const { distances, maxDistance } = calculateDistances(
+      topBoundRef.current,
+      bottomBoundRef.current
+    );
+
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     
     ctx.strokeStyle = '#3b82f6';
@@ -102,7 +112,42 @@ export default function GuillochePattern({
     ctx.lineWidth = 2;
     cartesianDraw(ctx, bottomBoundRef.current, canvas);
     
+    const testPattern = (t: number) => 0.5 + 0.4 * Math.sin(t * Math.PI * 4);
+    const mappedPoints = patternMapperRef.current.mapPattern(testPattern);
+
+    const mappedDebugPositions = [];
+    for (let i = 0; i < mappedPoints.x.length; i++) {
+      const topX = topBoundRef.current.points.x[i];
+      const topY = topBoundRef.current.points.y[i];
+      const dx = mappedPoints.x[i] - topX;
+      const dy = mappedPoints.y[i] - topY;
+      const distanceFromTop = Math.sqrt(dx * dx + dy * dy);
+      
+      mappedDebugPositions.push({
+        percentage: testPattern(i / mappedPoints.x.length),
+        distanceFromTop: distanceFromTop
+      });
+    }
+
+    ctx.strokeStyle = '#ef4444';
+    ctx.lineWidth = 2;
+    cartesianDraw(ctx, bottomBoundRef.current, canvas);
+
+    // STAGE 5: Draw mapped pattern on main canvas
+    ctx.strokeStyle = '#8b5cf6'; // Purple
+    ctx.lineWidth = 1.5;
+    drawMappedPattern(ctx, mappedPoints, canvas);
+
+    // Draw both patterns on debug canvas:
     drawDebugCanvas(debugCtx, debugCanvas, distances, maxDistance, topWasLonger);
+
+    // Red: original pattern
+    drawDebugPattern(debugCtx, debugCanvas, testPattern, topBoundRef.current.points.x.length);
+
+    // Purple: where those points land in green area
+    drawMappedDebugPattern(debugCtx, debugCanvas, mappedDebugPositions, maxDistance);
+
+    console.log('✅ Stage 4.5: Both patterns drawn on debug canvas (red=input, purple=mapped)');
   };
   
   useLayoutEffect(() => {

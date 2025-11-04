@@ -1,16 +1,27 @@
 // ============================================================================
-// patternMapper.ts - Maps patterns between boundary curves
+// lib/patternMapper.ts - Stage 1: Class Definition Only
 // ============================================================================
 
-import { BoundaryCurve } from "@/lib/boundaryCurve";
+import { BoundaryCurve } from './boundaryCurve';
 
+/**
+ * Function that defines a pattern to be mapped between boundaries
+ * Takes t (0 to 1) and returns a percentage (0 to 1) representing
+ * position between top boundary (0) and bottom boundary (1)
+ */
 export type PatternFunction = (t: number) => number;
 
+/**
+ * Mapped points in normalized coordinates (0-1)
+ */
 export interface MappedPoints {
   x: Float32Array;
   y: Float32Array;
 }
 
+/**
+ * Maps pattern functions to the space between two boundary curves
+ */
 export class PatternMapper {
   private topBoundary: BoundaryCurve;
   private bottomBoundary: BoundaryCurve;
@@ -37,7 +48,7 @@ export class PatternMapper {
     const mappedY = new Float32Array(pointCount);
 
     for (let i = 0; i < pointCount; i++) {
-      const t = i / (pointCount - 1); // 0 to 1
+      const t = i / (pointCount - 1);
       
       // Evaluate pattern function to get percentage (0-1)
       const percentage = patternFn(t);
@@ -91,68 +102,4 @@ export class PatternMapper {
   getPointCount(): number {
     return this.topBoundary.points.x.length;
   }
-
-  /**
-   * Get the boundaries being used (for debugging/inspection)
-   */
-  getBoundaries(): { top: BoundaryCurve; bottom: BoundaryCurve } {
-    return {
-      top: this.topBoundary,
-      bottom: this.bottomBoundary
-    };
-  }
 }
-
-// ============================================================================
-// Common Pattern Functions (for convenience)
-// ============================================================================
-
-export const Patterns = {
-  /**
-   * Sine wave centered at 50%
-   */
-  sineWave: (frequency: number = 1, amplitude: number = 0.5): PatternFunction => {
-    return (t: number) => 0.5 + amplitude * Math.sin(t * Math.PI * 2 * frequency);
-  },
-
-  /**
-   * Straight horizontal line at specified percentage
-   */
-  straightLine: (percentage: number = 0.5): PatternFunction => {
-    return (_t: number) => percentage;
-  },
-
-  /**
-   * Linear gradient from top to bottom
-   */
-  gradient: (): PatternFunction => {
-    return (t: number) => t;
-  },
-
-  /**
-   * Sawtooth wave
-   */
-  sawtooth: (frequency: number = 1): PatternFunction => {
-    return (t: number) => (t * frequency) % 1;
-  },
-
-  /**
-   * Square wave
-   */
-  square: (frequency: number = 1): PatternFunction => {
-    return (t: number) => ((t * frequency) % 1) < 0.5 ? 0.2 : 0.8;
-  },
-
-  /**
-   * Multiple sine waves combined
-   */
-  complexWave: (frequencies: number[] = [1, 2, 3]): PatternFunction => {
-    return (t: number) => {
-      let sum = 0;
-      for (const freq of frequencies) {
-        sum += Math.sin(t * Math.PI * 2 * freq);
-      }
-      return 0.5 + (sum / frequencies.length) * 0.4;
-    };
-  }
-};

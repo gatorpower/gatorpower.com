@@ -34,8 +34,8 @@ export default function Homie() {
           }}
           bottomBoundary={{
             fn: (t: number): number => t, // Straight line at 0
-            xRange: [60, 70],  // Only right half
-            yRange: [30, 100]    // Full height
+            xRange: [50, 100],  // Only right half
+            yRange: [0, 100]    // Full height
           }}
         />
       </main>

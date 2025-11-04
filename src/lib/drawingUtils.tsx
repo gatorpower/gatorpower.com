@@ -91,3 +91,99 @@ export function drawDebugCanvas(
     debugCtx.stroke();
   }
 }
+
+/**
+ * Draw a pattern function on the debug canvas for visualization
+ * This shows what the pattern looks like before it's mapped to boundaries
+ */
+export function drawDebugPattern(
+  debugCtx: CanvasRenderingContext2D,
+  debugCanvas: HTMLCanvasElement,
+  patternFn: (t: number) => number,
+  pointCount: number
+): void {
+  debugCtx.strokeStyle = '#ef4444'; // Red
+  debugCtx.lineWidth = 2;
+  debugCtx.beginPath();
+
+  for (let i = 0; i < pointCount; i++) {
+    const t = i / (pointCount - 1);
+    const percentage = patternFn(t);
+    
+    // Clamp to 0-1
+    const clampedPercentage = Math.max(0, Math.min(1, percentage));
+    
+    // Draw from bottom up (0% = bottom, 100% = top)
+    const x = i;
+    const y = debugCanvas.height - (clampedPercentage * debugCanvas.height);
+
+    if (i === 0) {
+      debugCtx.moveTo(x, y);
+    } else {
+      debugCtx.lineTo(x, y);
+    }
+  }
+
+  debugCtx.stroke();
+}
+
+/**
+ * Draw mapped pattern positions on the debug canvas
+ * Shows where pattern points land within the green distance area
+ */
+export function drawMappedDebugPattern(
+  debugCtx: CanvasRenderingContext2D,
+  debugCanvas: HTMLCanvasElement,
+  mappedPoints: { percentage: number; distanceFromTop: number }[],
+  maxDistance: number
+): void {
+  debugCtx.strokeStyle = '#8b5cf6'; // Purple
+  debugCtx.lineWidth = 2;
+  debugCtx.beginPath();
+
+  for (let i = 0; i < mappedPoints.length; i++) {
+    const x = i;
+    // Distance from top, scaled to canvas height
+    const y = (mappedPoints[i].distanceFromTop / maxDistance) * debugCanvas.height;
+
+    if (i === 0) {
+      debugCtx.moveTo(x, y);
+    } else {
+      debugCtx.lineTo(x, y);
+    }
+  }
+
+  debugCtx.stroke();
+}
+
+// In drawingUtils.ts, add this function:
+
+/**
+ * Draw mapped pattern points on the main canvas
+ */
+export function drawMappedPattern(
+  ctx: CanvasRenderingContext2D,
+  mappedPoints: { x: Float32Array; y: Float32Array },
+  canvas: HTMLCanvasElement
+): void {
+  const scaleX = canvas.width;
+  const scaleY = canvas.height;
+  const len = mappedPoints.x.length;
+
+  if (len === 0) return;
+
+  ctx.beginPath();
+  ctx.moveTo(
+    mappedPoints.x[0] * scaleX,
+    (1 - mappedPoints.y[0]) * scaleY
+  );
+
+  for (let i = 1; i < len; i++) {
+    ctx.lineTo(
+      mappedPoints.x[i] * scaleX,
+      (1 - mappedPoints.y[i]) * scaleY
+    );
+  }
+
+  ctx.stroke();
+}
