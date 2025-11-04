@@ -112,8 +112,8 @@ export default function GuillochePattern({
     ctx.lineWidth = 2;
     cartesianDraw(ctx, bottomBoundRef.current, canvas);
     
-    const testPattern = (t: number) => 0.5 + 0.4 * Math.sin(t * Math.PI * 4);
-    const mappedPoints = patternMapperRef.current.mapPattern(testPattern);
+    const testPattern = (t: number) => 0.5 + 0.3 * Math.sin(t * Math.PI * 2) + 0.1 * Math.sin(t * Math.PI * 8);
+    const mappedPoints = patternMapperRef.current.mapPattern((t) => 1 - testPattern(t));
 
     const mappedDebugPositions = [];
     for (let i = 0; i < mappedPoints.x.length; i++) {
@@ -133,7 +133,7 @@ export default function GuillochePattern({
     ctx.lineWidth = 2;
     cartesianDraw(ctx, bottomBoundRef.current, canvas);
 
-    // STAGE 5: Draw mapped pattern on main canvas
+    // Draw mapped pattern on main canvas
     ctx.strokeStyle = '#8b5cf6'; // Purple
     ctx.lineWidth = 1.5;
     drawMappedPattern(ctx, mappedPoints, canvas);
@@ -146,8 +146,6 @@ export default function GuillochePattern({
 
     // Purple: where those points land in green area
     drawMappedDebugPattern(debugCtx, debugCanvas, mappedDebugPositions, maxDistance);
-
-    console.log('✅ Stage 4.5: Both patterns drawn on debug canvas (red=input, purple=mapped)');
   };
   
   useLayoutEffect(() => {
