@@ -1,5 +1,5 @@
 // ============================================================================
-// components/guillochePattern.tsx
+// Update guillochePattern.tsx - Add pattern prop
 // ============================================================================
 
 'use client'
@@ -14,22 +14,24 @@ import {
   drawDebugCanvas,
   drawDebugPattern,
   drawMappedDebugPattern,
-  drawMappedPattern,
+  drawMappedPattern
 } from "@/lib/drawingUtils";
-import { PatternMapper } from "@/lib/patternMapper";
+import { PatternMapper, type PatternFunction } from "@/lib/patternMapper";
 
 interface GuillochePatternProps {
   width: number;
   height: number;
   topBoundary?: FormulaConfig;
   bottomBoundary?: FormulaConfig;
+  pattern?: PatternFunction;
 }
 
 export default function GuillochePattern({ 
   width, 
   height,
   topBoundary,
-  bottomBoundary 
+  bottomBoundary,
+  pattern,
 }: GuillochePatternProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const debugCanvasRef = useRef<HTMLCanvasElement>(null);
@@ -48,9 +50,12 @@ export default function GuillochePattern({
     xRange: [0, 100],
     yRange: [0, 0],
   };
+
+  const defaultPattern: PatternFunction = (t: number) => 0.5;  // Straight line at 50%
   
   const topFormula = topBoundary ?? defaultTopBoundary;
   const bottomFormula = bottomBoundary ?? defaultBottomBoundary;
+  const innerPattern = pattern ?? defaultPattern;  // Use prop or default
   
   const setupAndDraw = () => {
     if (!canvasRef.current || !debugCanvasRef.current) return;
@@ -96,24 +101,8 @@ export default function GuillochePattern({
       topBoundRef.current,
       bottomBoundRef.current
     );
-    
-    const { distances, maxDistance } = calculateDistances(
-      topBoundRef.current,
-      bottomBoundRef.current
-    );
 
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    
-    ctx.strokeStyle = '#3b82f6';
-    ctx.lineWidth = 2;
-    cartesianDraw(ctx, topBoundRef.current, canvas);
-    
-    ctx.strokeStyle = '#ef4444';
-    ctx.lineWidth = 2;
-    cartesianDraw(ctx, bottomBoundRef.current, canvas);
-    
-    const testPattern = (t: number) => 0.5 + 0.3 * Math.sin(t * Math.PI * 2) + 0.1 * Math.sin(t * Math.PI * 8);
-    const mappedPoints = patternMapperRef.current.mapPattern((t) => 1 - testPattern(t));
+    const mappedPoints = patternMapperRef.current.mapPattern((t) => 1 - innerPattern(t));
 
     const mappedDebugPositions = [];
     for (let i = 0; i < mappedPoints.x.length; i++) {
@@ -124,33 +113,38 @@ export default function GuillochePattern({
       const distanceFromTop = Math.sqrt(dx * dx + dy * dy);
       
       mappedDebugPositions.push({
-        percentage: testPattern(i / mappedPoints.x.length),
+        percentage: innerPattern(i / mappedPoints.x.length),
         distanceFromTop: distanceFromTop
       });
     }
-
+    
+    const { distances, maxDistance } = calculateDistances(
+      topBoundRef.current,
+      bottomBoundRef.current
+    );
+    
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    
+    ctx.strokeStyle = '#3b82f6';
+    ctx.lineWidth = 2;
+    cartesianDraw(ctx, topBoundRef.current, canvas);
+    
     ctx.strokeStyle = '#ef4444';
     ctx.lineWidth = 2;
     cartesianDraw(ctx, bottomBoundRef.current, canvas);
-
-    // Draw mapped pattern on main canvas
-    ctx.strokeStyle = '#8b5cf6'; // Purple
+    
+    ctx.strokeStyle = '#8b5cf6';
     ctx.lineWidth = 1.5;
     drawMappedPattern(ctx, mappedPoints, canvas);
-
-    // Draw both patterns on debug canvas:
+    
     drawDebugCanvas(debugCtx, debugCanvas, distances, maxDistance, topWasLonger);
-
-    // Red: original pattern
-    drawDebugPattern(debugCtx, debugCanvas, testPattern, topBoundRef.current.points.x.length);
-
-    // Purple: where those points land in green area
+    drawDebugPattern(debugCtx, debugCanvas, innerPattern, topBoundRef.current.points.x.length);
     drawMappedDebugPattern(debugCtx, debugCanvas, mappedDebugPositions, maxDistance);
   };
   
   useLayoutEffect(() => {
     setupAndDraw();
-  }, [width, height, topFormula, bottomFormula]);
+  }, [width, height, topFormula, bottomFormula, innerPattern]);
   
   return (
     <>
