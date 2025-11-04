@@ -1,16 +1,18 @@
 // ============================================================================
-// guillochePattern.tsx - Component with Range Support
+// components/guillochePattern.tsx - Clean component (WORKING VERSION)
 // ============================================================================
 
 'use client'
 import { useRef, useLayoutEffect } from "react";
 import { 
   FormulaConfig, 
-  BoundaryCurve, 
-  cartesianDraw, 
-  calculateDistances,
-  drawDebugCanvas 
+  BoundaryCurve 
 } from "@/lib/boundaryCurve";
+import {
+  cartesianDraw,
+  calculateDistances,
+  drawDebugCanvas
+} from "@/lib/drawingUtils";
 
 interface GuillochePatternProps {
   width: number;
@@ -57,7 +59,6 @@ export default function GuillochePattern({
     canvas.width = width;
     canvas.height = height;
     
-    // Create or update boundary curves
     if (!topBoundRef.current) {
       topBoundRef.current = new BoundaryCurve(canvas);
     } else {
@@ -70,48 +71,9 @@ export default function GuillochePattern({
       bottomBoundRef.current.resize(canvas.width * 2);
     }
     
-    // Populate with formulas
     topBoundRef.current.fromFormula(topFormula);
     bottomBoundRef.current.fromFormula(bottomFormula);
     
-    // Find overlapping X range
-    const topXMin = topBoundRef.current.xRange[0] / 100;
-    const topXMax = topBoundRef.current.xRange[1] / 100;
-    const bottomXMin = bottomBoundRef.current.xRange[0] / 100;
-    const bottomXMax = bottomBoundRef.current.xRange[1] / 100;
-    
-    const overlapXMin = Math.max(topXMin, bottomXMin);
-    const overlapXMax = Math.min(topXMax, bottomXMax);
-    
-    console.log('📊 Range Analysis:', {
-      top: { xMin: topXMin, xMax: topXMax, span: topXMax - topXMin },
-      bottom: { xMin: bottomXMin, xMax: bottomXMax, span: bottomXMax - bottomXMin },
-      overlap: { xMin: overlapXMin, xMax: overlapXMax, span: overlapXMax - overlapXMin }
-    });
-    
-    if (overlapXMin >= overlapXMax) {
-      console.warn('⚠️ No overlap between curves');
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      return;
-    }
-    
-    // Determine target density (use the denser curve)
-    const topDensity = topBoundRef.current.points.x.length / ((topXMax - topXMin) || 1);
-    const bottomDensity = bottomBoundRef.current.points.x.length / ((bottomXMax - bottomXMin) || 1);
-    const targetDensity = Math.max(topDensity, bottomDensity);
-    
-    // Calculate point count for overlap region
-    const overlapPointCount = Math.ceil(targetDensity * (overlapXMax - overlapXMin));
-    
-    console.log('🎯 Density Analysis:', {
-      topDensity,
-      bottomDensity,
-      targetDensity,
-      overlapPointCount
-    });
-    
-    // TODO: Resample both curves to overlap region
-    // For now, use existing synchronization
     const topLength = topBoundRef.current.points.x.length;
     const bottomLength = bottomBoundRef.current.points.x.length;
     let topWasLonger = topLength >= bottomLength;
@@ -125,42 +87,11 @@ export default function GuillochePattern({
       topWasLonger = false;
     }
     
-    // Debug log points
-    console.log('🔵 TOP BOUNDARY:', {
-      length: topBoundRef.current.points.x.length,
-      xRange: topBoundRef.current.xRange,
-      yRange: topBoundRef.current.yRange,
-      firstPoint: {
-        x: topBoundRef.current.points.x[0],
-        y: topBoundRef.current.points.y[0]
-      },
-      lastPoint: {
-        x: topBoundRef.current.points.x[topBoundRef.current.points.x.length - 1],
-        y: topBoundRef.current.points.y[topBoundRef.current.points.y.length - 1]
-      }
-    });
-    
-    console.log('🔴 BOTTOM BOUNDARY:', {
-      length: bottomBoundRef.current.points.x.length,
-      xRange: bottomBoundRef.current.xRange,
-      yRange: bottomBoundRef.current.yRange,
-      firstPoint: {
-        x: bottomBoundRef.current.points.x[0],
-        y: bottomBoundRef.current.points.y[0]
-      },
-      lastPoint: {
-        x: bottomBoundRef.current.points.x[bottomBoundRef.current.points.x.length - 1],
-        y: bottomBoundRef.current.points.y[bottomBoundRef.current.points.y.length - 1]
-      }
-    });
-    
-    // Calculate distances
     const { distances, maxDistance } = calculateDistances(
       topBoundRef.current,
       bottomBoundRef.current
     );
     
-    // Draw main canvas
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     
     ctx.strokeStyle = '#3b82f6';
@@ -171,15 +102,7 @@ export default function GuillochePattern({
     ctx.lineWidth = 2;
     cartesianDraw(ctx, bottomBoundRef.current, canvas);
     
-    // Draw debug canvas
     drawDebugCanvas(debugCtx, debugCanvas, distances, maxDistance, topWasLonger);
-    
-    console.log('📏 Distance stats:', {
-      pointCount: distances.length,
-      maxDistance: maxDistance,
-      debugCanvasWidth: debugCanvas.width,
-      debugCanvasHeight: debugCanvas.height
-    });
   };
   
   useLayoutEffect(() => {
