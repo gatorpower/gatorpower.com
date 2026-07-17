@@ -1,18 +1,16 @@
 'use client';
 
+import * as Layout from '@/components/layout';
+
 export default function Home() {
 
   return (
     <>
-      <header>
-        Header
-      </header>
-      <main>
-        Main
-      </main>
-      <footer>
-        Footer
-      </footer>
+      <Layout.Header />
+      <Layout.Main>
+        <h1>Page content</h1>
+      </Layout.Main>
+      <Layout.Footer />
     </>
   );
 }
