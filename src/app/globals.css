@@ -23,8 +23,35 @@ body {
   margin: 0;
   padding: 0;
   font-family: Arial, sans-serif;
+
+  /* layout skeleton: main stretches, footer stays at bottom */
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  flex: 1;
 }
 
 canvas {
   background: #FFFFFF;
 }
+
+/* ---------------------------------------------------------
+   DEBUG — layout region colors. DELETE before adding assets.
+   --------------------------------------------------------- */
+header {
+  background: #fecaca; /* red-200 */
+  min-height: 80px;
+}
+
+main {
+  background: #bfdbfe; /* blue-200 */
+}
+
+footer {
+  background: #bbf7d0; /* green-200 */
+  min-height: 80px;
+}
+/* ------------------------- /DEBUG ------------------------ */
