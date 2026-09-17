@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import * as Gator from '@/components/layout';
 import './globals.css';
 
+
 const YEARS_EXPERIENCE = new Date().getFullYear() - 1999;
 
 export const metadata: Metadata = {
