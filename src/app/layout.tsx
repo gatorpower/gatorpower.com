@@ -1,7 +1,5 @@
 import type { Metadata } from 'next';
-import * as Gator from '@/components/layout';
 import './globals.css';
-
 
 const YEARS_EXPERIENCE = new Date().getFullYear() - 1999;
 
@@ -26,11 +24,7 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en">
-      <body>
-        <Gator.Header />
-        <Gator.Main>{children}</Gator.Main>
-        <Gator.Footer />
-      </body>
+      <body>{children}</body>
     </html>
   );
 }
